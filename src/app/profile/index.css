@@ -1,0 +1,26 @@
+
+/* .profile-bg-container{
+    min-height: 100vh;
+}
+
+
+.profile-inner-container{
+    min-height: 90vh;
+} */
+
+.no-posts-image{
+    width : 240px ;
+    box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+    margin-bottom: 12px;
+    /* box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px; */
+    /* box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px; */
+}
+
+.no-posts-container{
+    display: flex;
+    flex-direction: column;
+}
+
+.head-text{
+    color: #1e293b;
+}

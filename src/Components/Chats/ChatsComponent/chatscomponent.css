@@ -1,0 +1,71 @@
+.chats-small-screen {
+  display: none;
+}
+
+@media screen and (min-width: 768px) {
+  .chats-small-screen {
+    display: flex;
+  }
+}
+
+.send-button {
+  background-color: #473e66;
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.send-button > svg {
+  color: #fff;
+}
+
+.fixed-chat-container {
+  display: flex;
+  justify-content: space-between;
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+    rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+  padding: 6px;
+  border-radius: 20px;
+  /* position: absolute; */
+  bottom: 0;
+  right: 0;
+  left: 0;
+  margin-top: 2px;
+  background-color: antiquewhite;
+}
+
+.fixed-chat-container > input {
+  /* border:1px solid red; */
+  width: 86%;
+  padding-left: 6px;
+  outline: none;
+  background-color: antiquewhite;
+}
+
+.left-container-chat-list {
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+
+}
+
+.top-profile-container > button {
+  margin-left: auto;
+  align-self: flex-start;
+}
+
+.top-profile-container > button > svg {
+  color: #9a9999;
+  font-size: 12px;
+}
+
+.right-list-width-container{
+    width: 100%;
+}
+
+@media screen and (min-width:768px) {
+    .right-list-width-container{
+        width: 64%;
+    }
+}

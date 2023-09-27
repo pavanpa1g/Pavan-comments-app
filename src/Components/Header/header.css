@@ -1,0 +1,35 @@
+svg path{
+
+    /* Initial color */
+    transition: fill 0.2s ease;
+    /* Smooth color transition */
+}
+
+svg:hover path{
+    fill:#3B82F6;
+}
+
+.logout-icon{
+    display: flex;
+    margin-left: 14px;
+}
+
+@media screen and (min-width:450px) {
+    .logout-icon{
+        display: none;
+    }
+}
+
+
+.logout-button{
+    display: none;
+
+}
+
+
+@media screen and (min-width:450px) {
+    .logout-button{
+        display: flex;
+        margin-left: 14px;
+    }
+}

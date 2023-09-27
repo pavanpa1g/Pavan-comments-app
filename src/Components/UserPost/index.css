@@ -1,0 +1,63 @@
+.image-container-comment{
+    width: 100%;
+    margin-bottom: 10px;
+    box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+}
+
+
+@media screen and (min-width:413px) {
+    .image-container-comment{
+        width: 49%;
+    }
+}
+
+
+@media screen and (min-width:991px) {
+    .image-container-comment{
+        width: 32%;
+    }
+}
+
+
+
+.image{
+    width: 300px;
+    height: 180px;
+    object-fit: contain;
+}
+
+@media screen and (min-width:413px) {
+    .image{
+        /* width: 300px; */
+        /* height: 180px; */
+        /* object-fit: fill; */
+    }
+}
+
+.image :hover{
+    transform: scale(1.5);
+    object-fit: contain;
+}
+
+textarea {
+    width: 100%;
+    min-height: 30px; /* Initial height of one line */
+    resize: vertical; /* Allow vertical resizing */
+    outline: none;
+}
+
+/* ::-webkit-textfield-decoration-container{
+    width:0;
+    height: 0;
+} */
+
+.post-button{
+    border: 1px solid gray;
+
+    font-weight: 700;
+
+    border-radius: 6px;
+    padding:4px 4px;
+    /* height: 30px; */
+    margin-left: 10px;
+}

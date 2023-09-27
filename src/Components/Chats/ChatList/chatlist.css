@@ -1,0 +1,93 @@
+.input-container {
+    border: 1px solid gray;
+    border-radius: 8px;
+}
+
+
+@media screen and (min-width:600px) {
+    .input-container {
+        width: 150px;
+    }
+}
+
+
+.input-search {
+    border-radius: 8px;
+    height: 38px;
+    outline: none;
+}
+
+.input-container>svg {
+    color: #999;
+    font-size: 1.2rem;
+    margin-right: 0.5rem;
+}
+
+
+.display-none{
+    display: none;
+}
+
+.display-flex{
+    display: flex;
+}
+
+
+.small-screen{
+    display: none;
+}
+
+@media screen and (min-width:768px) {
+    .chat-list-container {
+            display: flex;
+        }
+    .small-screen{
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+
+.chat-list-bg-shadow{
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+
+
+.chat-item-bg-container{
+    box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+    padding: 14px 8px;
+}
+
+
+.chat-list-scroll-container{
+    padding: 4px 1px;
+    height: 94%;
+
+    overflow-y: scroll;
+}
+
+.left-list-width-container{
+    width: 100%;
+}
+
+
+@media screen  and (min-width:768px){
+    .left-list-width-container{
+        width: 34%;
+    }
+}
+
+
+.plus-button{
+    border: 2px solid rgb(194, 190, 190);
+    border-radius: 4px;
+    margin-left: 4px;
+    padding: 5px;
+}
+
+
+.plus-button > svg{
+    color: black;
+    font-size: 24px;
+}
