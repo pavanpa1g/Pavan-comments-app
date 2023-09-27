@@ -21,7 +21,7 @@ import io from "socket.io-client";
 import Lottie from "react-lottie";
 import animationData from "../../../animations/typing.json";
 
-const ENDPOINT = "http://localhost:3001";
+const ENDPOINT = "https://pavangramnew-pavangattu5-gmailcom.vercel.app";
 let socket, selectedChatCompare;
 
 const defaultOptions = {
