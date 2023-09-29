@@ -25,14 +25,13 @@ const Header = () => {
   const messageColor = currentPath === "/chats" ? "#3B82F6" : "#000";
 
   return (
-    <div className="header flex items-center bg-slate-100 p-2 px-6 mb-2">
+    <div className=" flex items-center bg-slate-100 p-2 px-6 mb-2">
       <Link href="/" className="text-black text-xl font-semibold mr-auto">
         <h1>Images</h1>
       </Link>
       <Link href="/profile" className="mr-4">
         <BsPersonCircle style={{ color: profileColor }} size={26} />
       </Link>
-      {/* <BsThreeDotsVertical style={{ color: "black" }} size={24} /> */}
       <Link href="/chats">
         <svg
           xmlns="http://www.w3.org/2000/svg"
