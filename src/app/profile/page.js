@@ -17,10 +17,11 @@ const ProfileModal = () => {
   const [loading, setLoading] = useState(false);
   const [userPosts, setUserPosts] = useState([]);
   const [postLoading, setPostLoading] = useState(false);
+  const [currentUserData, setCurrentUserData] = useState({ name: '', email: '', picture: '' })
 
   const userSelector = useSelector((state) => state.user.users.user);
 
-  const currentUserData = JSON.parse(localStorage.getItem("userData"));
+
 
   const { name, picture, email } = currentUserData;
 
@@ -62,6 +63,8 @@ const ProfileModal = () => {
   };
 
   useEffect(() => {
+    const currentUserData = JSON.parse(localStorage.getItem("userData"));
+    setCurrentUserData(currentUserData)
     checkUserToken();
     fetchUserImages();
   }, []);
