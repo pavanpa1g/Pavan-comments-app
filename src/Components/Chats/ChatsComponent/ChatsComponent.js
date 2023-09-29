@@ -18,10 +18,11 @@ import {
 import getFormattedDate from "@/utils/Datefunction";
 
 import io from "socket.io-client";
-import Lottie from "react-lottie";
-import animationData from "../../../animations/typing.json";
+// import Lottie from "react-lottie";
+// import animationData from "../../../animations/typing.json";
+import { baseUrl } from "@/utils/baseApi";
 
-const ENDPOINT = "https://pavangramnew-pavangattu5-gmailcom.vercel.app";
+const ENDPOINT = baseUrl;
 let socket, selectedChatCompare;
 
 const defaultOptions = {
@@ -109,7 +110,7 @@ const ChatsComponent = () => {
           Authorization: `Bearer ${Cookies.get("jwt_token")}`,
         },
       };
-      const url = `http://localhost:3001/api/message/${_id}`;
+      const url = `${baseUrl}/api/message/${_id}`;
 
       try {
         const response = await fetch(url, options);
@@ -167,7 +168,7 @@ const ChatsComponent = () => {
 
     const sendNewMessage = async () => {
       socket.emit("stop typing", selectedChat._id);
-      const url = "http://localhost:3001/api/message/";
+      const url = `${baseUrl}/api/message/`;
 
       const options = {
         method: "POST",
@@ -281,11 +282,11 @@ const ChatsComponent = () => {
             })}
                     {isTyping ? (
           <div>
-            <Lottie
+            {/* <Lottie
               options={defaultOptions}
               width={70}
               style={{}}
-            />
+            /> */}
           </div>
         ) : (
           <></>

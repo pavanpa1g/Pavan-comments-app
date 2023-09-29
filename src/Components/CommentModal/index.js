@@ -6,6 +6,7 @@ import "./index.css";
 import { Loader } from "../Loader";
 import getFormattedDate from "../../utils/Datefunction";
 import { useSelector } from "react-redux";
+import { baseUrl } from "@/utils/baseApi";
 
 const EachComment = ({ item }) => {
   const { _id, commentedBy, comment, createdAt } = item;
@@ -46,7 +47,7 @@ export const CommentModal = ({ image, setCommentModal, imageId, username }) => {
     }
     try {
       const response = await fetch(
-        `http://localhost:3001/api/comment/${imageId}`,options
+        `${baseUrl}/api/comment/${imageId}`,options
       );
       if (response.ok) {
         const data = await response.json();

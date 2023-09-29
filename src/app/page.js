@@ -20,6 +20,7 @@ import HomePageLoading from "@/Components/SkeletonLoading.js/HomePageLoading";
 import {addPostSinglePost, addPosts, removeAllPosts } from "@/store/features/postSlice";
 import { Flip, toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { baseUrl } from "@/utils/baseApi";
 
 const data = [{ id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }, { id: 6 }];
 
@@ -41,8 +42,7 @@ export default function Home() {
 
   const fetchAllPosts =async()=>{
     setImagesLoading(true)
-    console.log("clikced")
-    const url = 'http://localhost:3001/api/image'
+    const url = `${baseUrl}/api/image`
     const token = Cookies.get('jwt_token')
     const options = {
       method:'GET',
@@ -124,7 +124,7 @@ export default function Home() {
     };
 
     try {
-      const response = await fetch("http://localhost:3001/api/image", options);
+      const response = await fetch(`${baseUr}/api/image`, options);
       if (response.ok) {
         setLoading(false);
         const data = await response.json();

@@ -9,6 +9,7 @@ import "./sidebar.css";
 import Cookies from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import { addSelectedChat, addSingleChatList } from "@/store/features/chatSlice";
+import { baseUrl } from "@/utils/baseApi";
 
 const data = [
   { id: 1 },
@@ -96,7 +97,7 @@ const SideBar = ({ isOpen, setIsOpen }) => {
       return;
     }
     setChatListLoading(true);
-    const url = `http://localhost:3001/api/user?search=${searchTerm}`;
+    const url = `${baseUrl}/api/user?search=${searchTerm}`;
 
     const token = Cookies.get("jwt_token");
 
@@ -162,7 +163,7 @@ const SideBar = ({ isOpen, setIsOpen }) => {
         body: JSON.stringify({ userId }),
       };
 
-      const url = `http://localhost:3001/api/chat`;
+      const url = `${baseUrl}/api/chat`;
 
       const response = await fetch(url, config);
 

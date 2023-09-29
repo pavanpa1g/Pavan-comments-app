@@ -3,8 +3,9 @@ import {  toast, Flip } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { useDispatch } from 'react-redux';
 import { addUserData } from "@/store/features/userSlice";
+import { baseUrl } from "@/utils/baseApi";
 
-const baseApi = "http://localhost:3001";
+// const baseApi = "http://localhost:3001";
 
 
 export const handleSignUp = async (
@@ -24,7 +25,7 @@ export const handleSignUp = async (
     body: JSON.stringify(userData),
   };
 
-  const url = `${baseApi}/api/user`;
+  const url = `${baseUrl}/api/user`;
 
   try {
     const response = await fetch(url, options);

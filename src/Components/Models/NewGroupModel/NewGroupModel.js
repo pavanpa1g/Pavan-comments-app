@@ -7,6 +7,7 @@ import Cookies from "js-cookie";
 import { getToken } from "@/Components/apiCallsAndLogics/logics";
 import { useDispatch } from "react-redux";
 import { addSingleChatList } from "@/store/features/chatSlice";
+import { baseUrl } from "@/utils/baseApi";
 
 const NewGroupModel = ({ isGroupModel, setGroupModel }) => {
   const [groupNameInput, setGroupNameInput] = useState("");
@@ -37,7 +38,7 @@ const NewGroupModel = ({ isGroupModel, setGroupModel }) => {
   };
   const searchUsers = async () => {
     setLoading(true);
-    const url = `http://localhost:3001/api/user?search=${userTextInput}`;
+    const url = `${baseUrl}/api/user?search=${userTextInput}`;
     const options = {
       method: "GET",
       headers: {
@@ -142,7 +143,7 @@ const NewGroupModel = ({ isGroupModel, setGroupModel }) => {
       },
       body: JSON.stringify(groupData),
     };
-    const url = "http://localhost:3001/api/chat/group";
+    const url = `${baseUrl}/api/chat/group`;
 
     try {
       const response = await fetch(url, options);

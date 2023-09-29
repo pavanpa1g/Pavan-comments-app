@@ -24,7 +24,7 @@ const UserPost = ({ item }) => {
           {getFormattedDate(createdAt)}
         </p>
       </div>
-      <img src={imageUrl} alt="logo" className="image hover:object-contain" />
+      <img src={imageUrl} alt="logo" className="image hover:object-contain" loading="lazy" />
       <Comments
         image={imageUrl}
         // imageId={_id}

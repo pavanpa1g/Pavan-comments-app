@@ -11,6 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import "./chatlist.css";
 import NewGroupModel from "@/Components/Models/NewGroupModel/NewGroupModel";
+import { baseUrl } from "@/utils/baseApi";
 
 const ChatList = ({ setIsOpen }) => {
   const [loggedInUser, serLoggedInUser] = useState({});
@@ -28,7 +29,7 @@ const ChatList = ({ setIsOpen }) => {
         },
       };
 
-      const url = "http://localhost:3001/api/chat";
+      const url = `${baseUrl}/api/chat`;
 
       const response = await fetch(url, config);
       if (response.ok) {

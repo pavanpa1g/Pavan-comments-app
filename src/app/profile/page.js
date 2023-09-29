@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { addPosts, removeAllPosts } from "@/store/features/postSlice";
 import ProtectedRoute from "../../Components/ProtectedRoute";
+import { baseUrl } from "@/utils/baseApi";
 
 const ProfileModal = () => {
   const [loading, setLoading] = useState(false);
@@ -33,7 +34,7 @@ const ProfileModal = () => {
         Authorization: `Bearer ${userSelector.token}`,
       },
     };
-    const url = `http://localhost:3001/api/image/my/posts`;
+    const url = `${baseUrl}/api/image/my/posts`;
 
     try {
       const response = await fetch(url, options);

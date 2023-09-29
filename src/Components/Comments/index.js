@@ -10,6 +10,7 @@ import { updateCommentsCountOnPost, updateLikeOnPost } from "@/store/features/po
 
 import { Flip, toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { baseUrl } from "@/utils/baseApi";
 
 const Comments = ({ image,  username, _id, likedBy, likes,commentsCount }) => {
   const [comment, setComment] = useState("");
@@ -38,7 +39,7 @@ const Comments = ({ image,  username, _id, likedBy, likes,commentsCount }) => {
 
     try {
       const response = await fetch(
-        "http://localhost:3001/api/comment",
+        `${baseUrl}/api/comment`,
         options
       );
       if (response.ok) {
@@ -82,7 +83,7 @@ const Comments = ({ image,  username, _id, likedBy, likes,commentsCount }) => {
 
 
   const handleLike = async () => {
-    const url = `http://localhost:3001/api/image/like/${_id}`;
+    const url = `${baseUrl}/api/image/like/${_id}`;
     const options = {
       method: "PUT",
       headers: {

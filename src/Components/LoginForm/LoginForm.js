@@ -6,8 +6,9 @@ import { ToastContainer, toast,Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { addUserData } from '@/store/features/userSlice';
 import Cookies from 'js-cookie';
+import { baseUrl } from '@/utils/baseApi';
 
-const baseApi = "http://localhost:3001";
+
 
 const LoginForm = () => {
     const [userData, setUserData] = useState({
@@ -34,7 +35,7 @@ const LoginForm = () => {
         body: JSON.stringify(userData),
       };
 
-      const url = `${baseApi}/api/user/login`;
+      const url = `${baseUrl}/api/user/login`;
 
       try {
         const response = await fetch(url, options);
