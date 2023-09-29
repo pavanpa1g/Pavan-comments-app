@@ -54,68 +54,68 @@ export const handleSignUp = async (
 
 
 
- const handleLogin = async (
-  event,
-  userData,
-  setErrorMsg,
-  setSignInLoading
-) => {
-  event.preventDefault();
+//  const handleLogin = async (
+//   event,
+//   userData,
+//   setErrorMsg,
+//   setSignInLoading
+// ) => {
+//   event.preventDefault();
 
-  const options = {
-    method: "POST",
-    headers: {
-      "content-type": "application/json",
-    },
-    body: JSON.stringify(userData),
-  };
+//   const options = {
+//     method: "POST",
+//     headers: {
+//       "content-type": "application/json",
+//     },
+//     body: JSON.stringify(userData),
+//   };
 
-  const url = `${baseApi}/api/user/login`;
+//   const url = `${baseApi}/api/user/login`;
 
-  try {
-    const response = await fetch(url, options);
+//   try {
+//     const response = await fetch(url, options);
 
-    if (response.ok) {
-      const data = await response.json();
-      setUserData(data)
-      toast.success("Logged in successfully", {
-        position: "top-center",
-        autoClose: 3000,
-        transition: Flip,
-      });
-    } else {
-      const { message } = await response.json();
-      setErrorMsg(message);
-      toast.error(`${message}`, {
-        position: "top-center",
-        autoClose: 3000,
-        transition: Flip,
-      });
-    }
-  } catch (error) {
-    console.log(error);
-    toast.error(`${error}`, {
-      position: "top-center",
-      autoClose: 3000,
-      transition: Flip,
-    });
-  }
-};
-
-
+//     if (response.ok) {
+//       const data = await response.json();
+//       setUserData(data)
+//       toast.success("Logged in successfully", {
+//         position: "top-center",
+//         autoClose: 3000,
+//         transition: Flip,
+//       });
+//     } else {
+//       const { message } = await response.json();
+//       setErrorMsg(message);
+//       toast.error(`${message}`, {
+//         position: "top-center",
+//         autoClose: 3000,
+//         transition: Flip,
+//       });
+//     }
+//   } catch (error) {
+//     console.log(error);
+//     toast.error(`${error}`, {
+//       position: "top-center",
+//       autoClose: 3000,
+//       transition: Flip,
+//     });
+//   }
+// };
 
 
-const setUserData = (data)=>{
-    const dataJson = JSON.stringify(data)
-    localStorage.setItem('userData', dataJson )
 
-    const {token} = data
-    Cookies.set('jwt_token',token,{ expires: 30, path: "/" })
-    const dispatch = useDispatch()
-    dispatch(addUserData(data))
-    const router = useRouter()
-    router.replace('/')
-}
+
+// const setUserData = (data)=>{
+//     const dataJson = JSON.stringify(data)
+//     localStorage.setItem('userData', dataJson )
+
+//     const {token} = data
+//     Cookies.set('jwt_token',token,{ expires: 30, path: "/" })
+//     const dispatch = useDispatch()
+//     dispatch(addUserData(data))
+//     const router = useRouter()
+//     router.replace('/')
+// }
 
 
 // import { Provider, useDispatch } from "react-redux";

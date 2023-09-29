@@ -7,11 +7,7 @@ const About = () => {
   return <div>page</div>;
 };
 
-export default () => (
-  <ProtectedRoute>
-    <About />
-  </ProtectedRoute>
-);
+export default About
 
 
 // export default middleware(About)

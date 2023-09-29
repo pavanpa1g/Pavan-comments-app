@@ -29,7 +29,5 @@ const ChatPage = () => {
   );
 };
 
-export default  ()=>
-<ProtectedRoute>
-<ChatPage />
-</ProtectedRoute> 
+
+export default  ChatPage 

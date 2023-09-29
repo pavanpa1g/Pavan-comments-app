@@ -97,7 +97,7 @@ export default function Home() {
     }
 
     fetchAllPosts()
-  }, [router]);
+  }, []);
 
   const handleImageChange = (e) => {
     setSelectedImage(e.target.files[0]);

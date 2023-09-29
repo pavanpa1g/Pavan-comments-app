@@ -136,8 +136,4 @@ const ProfileModal = () => {
   );
 };
 
-export default ()=>(
-  <ProtectedRoute>
-    <ProfileModal />
-  </ProtectedRoute>
-);
+export default ProfileModal 
