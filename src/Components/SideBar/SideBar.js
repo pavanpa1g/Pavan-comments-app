@@ -11,41 +11,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { addSelectedChat, addSingleChatList } from "@/store/features/chatSlice";
 import { baseUrl } from "@/utils/baseApi";
 import Image from "next/image";
+import UsersLoading from "../LoadingFolder/UsersLoading/UsersLoading";
 
-const data = [
-  { id: 1 },
-  { id: 2 },
-  { id: 3 },
-  { id: 4 },
-  { id: 5 },
-  { id: 6 },
-  { id: 7 },
-  { id: 8 },
-  { id: 9 },
-  { id: 10 },
-  { id: 11 },
-];
 
-const UsersLoading = () => {
-  return (
-    <div className="loading-chat-container overflow-scroll h-[90vh] pb-2 ">
-      {data.map((item) => {
-        return (
-          <div
-            key={item.id}
-            className="flex border border-gray-400 p-3 rounded-lg mb-2 items-center justify-center animate-pulse bg-gray-200"
-          >
-            <div className=" bg-gray-500 rounded-[50%] w-[30px] h-[30px] animate-pulse mr-2 self-start"></div>
-            <div className="w-full">
-              <div className="w-full bg-gray-400 h-[20px] animate-pulse mb-1 rounded"></div>
-              <div className="w-[60%] bg-gray-300 h-[20px] animate-pulse rounded"></div>
-            </div>
-          </div>
-        );
-      })}
-    </div>
-  );
-};
 
 const RenderUsers = ({ item, handleClick }) => {
   const { picture, name, email, _id } = item;

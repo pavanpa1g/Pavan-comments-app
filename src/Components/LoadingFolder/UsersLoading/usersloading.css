@@ -1,0 +1,72 @@
+/* Define the styles for the .loading-chat-container class */
+.loading-chat-container {
+    overflow: scroll;
+    height: 90vh;
+    padding:4px 0px;
+}
+
+/* Define the styles for the .loading-chat-item class */
+.loading-chat-item {
+    display: flex;
+    border: 1px solid #cbd5e0;
+    padding: 0.75rem;
+    border-radius: 0.375rem;
+    margin-bottom: 1rem;
+    align-items: center;
+    justify-content: center;
+    animation: pulse 1.5s infinite;
+    background-color: #e2e8f0;
+}
+
+/* Define the styles for the .loading-profile-image class */
+.loading-profile-image {
+    background-color: #a0aec0;
+    border-radius: 50%;
+    width: 1.875rem;
+    height: 1.875rem;
+    animation: pulse 1.5s infinite;
+    margin-right: 0.5rem;
+    align-self: flex-start;
+}
+
+/* Define the styles for the .loading-name-and-text class */
+.loading-name-and-text {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+/* Define the styles for the .loading-name class */
+.loading-name {
+    background-color: #9aa2af;
+    width: 60%;
+    height: 1.25rem;
+    animation: pulse 1.5s infinite;
+    border-radius: 0.25rem;
+    margin-bottom: 0.125rem;
+}
+
+/* Define the styles for the .loading-text class */
+.loading-text {
+    background-color: #abb3bd;
+    width: 50%;
+    height: 1.25rem;
+    animation: pulse 1.5s infinite;
+    border-radius: 0.25rem;
+}
+
+/* Keyframes for the pulse animation */
+@keyframes pulse {
+    0% {
+        opacity: 0.6;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.6;
+    }
+}

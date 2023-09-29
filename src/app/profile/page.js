@@ -20,7 +20,9 @@ const ProfileModal = () => {
 
   const userSelector = useSelector((state) => state.user.users.user);
 
-  const { name, picture, email } = userSelector;
+  const currentUserData = JSON.parse(localStorage.getItem("userData"));
+
+  const { name, picture, email } = currentUserData;
 
   const dispatch = useDispatch();
 
@@ -32,7 +34,7 @@ const ProfileModal = () => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${userSelector.token}`,
+        Authorization: `Bearer ${currentUserData.token}`,
       },
     };
     const url = `${baseUrl}/api/image/my/posts`;
@@ -94,7 +96,7 @@ const ProfileModal = () => {
                   </p>
                 </div>
                 <div className="flex">
-                  <h1 className="text-black font-bold mr-2">Email :</h1>
+                  <h1 className="text-black font-bold mr-2">Email:</h1>
                   <p className="text-gray-600">{email}</p>
                 </div>
               </div>
@@ -136,4 +138,4 @@ const ProfileModal = () => {
   );
 };
 
-export default ProfileModal 
+export default ProfileModal;

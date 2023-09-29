@@ -27,10 +27,13 @@ export const chatSlice = createSlice({
     },
     addSingleChatList:(state,action)=>{
       state.chatList.push(action.payload)
+    },
+    removeAllChatList:(state,action)=>{
+      state.chatList = []
     }
   },
 });
 
-export const { addSelectedChat,addChats,addSingleChat,addChatsList,addSingleChatList, removeSelectedChat } = chatSlice.actions;
+export const { addSelectedChat,addChats,addSingleChat,addChatsList,addSingleChatList, removeSelectedChat,removeAllChatList } = chatSlice.actions;
 
 export default chatSlice.reducer;

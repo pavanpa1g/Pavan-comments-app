@@ -21,7 +21,7 @@ const UserPost = ({ item }) => {
           {name.slice(0, 1).toUpperCase()}
           {name.slice(1)}
         </h2>
-        <p className="para text-gray-500 text-xs ml-auto">
+        <p className="para">
           {getFormattedDate(createdAt)}
         </p>
       </div>

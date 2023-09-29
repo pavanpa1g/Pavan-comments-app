@@ -41,7 +41,7 @@ textarea {
 }
 
 
-@media screen and (min-width:413px) {
+@media screen and (min-width:576px) {
     .image-container-comment{
         width: 49%;
         height: 380px;

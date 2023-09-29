@@ -150,7 +150,15 @@
     flex-direction: column;
     /* justify-content: center; */
     align-items: center;
-    padding-top: 100px;
+    padding-top: 240px;
+    width: 99%;
+  }
+
+
+  @media screen and (min-width:560px) {
+    .inner-container{
+      padding-top: 100px;
+    }
   }
   
   .error-message{

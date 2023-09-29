@@ -20,9 +20,7 @@ export const userSlice = createSlice({
     name: "user",
     initialState ,
     reducers : {
-               addUserData:(state,action) =>{
-                console.log("action",action)
-                
+               addUserData:(state,action) =>{  
                 const user = {
                     id:nanoid(),
                     user:action.payload

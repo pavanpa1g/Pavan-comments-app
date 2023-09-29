@@ -1,10 +1,48 @@
-
-.comment-count{
-    padding-left: 6px;
-    padding-right: 6px;
-    background-color: #f1916d;
+.comment-count {
+  padding-left: 6px;
+  padding-right: 6px;
+  background-color: #f1916d;
 }
 
-.text{
-    color: #06142e;
+.text {
+  color: #06142e;
+}
+
+.comment-label {
+  color: #6b7280;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  margin-right: auto;
+}
+
+.count-text {
+  color: #5e5c5c;
+  margin-top: 0px;
+}
+
+.counts-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-right: 16px;
+}
+
+.like-icon-container {
+  display: flex;
+  align-items: center;
+}
+
+.post-button {
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+    background-color: #ffffff;
+        color: #6b7280;
+}
+
+.hover-post-button:hover {
+  color: #3b82f6;
+  border-color: #3b82f6;
+
 }

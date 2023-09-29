@@ -4,7 +4,11 @@ import { HiOutlinePlus } from "react-icons/hi";
 
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
-import { addChatsList, addSelectedChat } from "@/store/features/chatSlice";
+import {
+  addChatsList,
+  addSelectedChat,
+  removeAllChatList,
+} from "@/store/features/chatSlice";
 
 import { Flip, toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -13,15 +17,18 @@ import "./chatlist.css";
 import NewGroupModel from "@/Components/Models/NewGroupModel/NewGroupModel";
 import { baseUrl } from "@/utils/baseApi";
 import Image from "next/image";
+import { Loader } from "@/Components/Loader";
 
 const ChatList = ({ setIsOpen }) => {
   const [loggedInUser, serLoggedInUser] = useState({});
   const dispatch = useDispatch();
   const selectedChatSelector = useSelector((state) => state.chat.selectedChat);
   const chatsListSelector = useSelector((state) => state.chat.chatList);
-  const [isGroupModel,setGroupModel] = useState(false)
+  const [isGroupModel, setGroupModel] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const fetchChats = async () => {
+    setLoading(true);
     try {
       const config = {
         method: "GET",
@@ -35,6 +42,7 @@ const ChatList = ({ setIsOpen }) => {
       const response = await fetch(url, config);
       if (response.ok) {
         const data = await response.json();
+        dispatch(removeAllChatList());
         dispatch(addChatsList(data));
       } else {
         const { message } = response.json();
@@ -53,6 +61,7 @@ const ChatList = ({ setIsOpen }) => {
       });
       console.log(error);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -82,7 +91,6 @@ const ChatList = ({ setIsOpen }) => {
     const isEqualSelectedChat =
       selectedChatSelector.data && selectedChatSelector.data._id === item._id;
 
-
     return (
       <div
         className={`chat-item-bg-container flex items-center mb-2 rounded cursor-pointer ${
@@ -95,9 +103,9 @@ const ChatList = ({ setIsOpen }) => {
           alt="profile"
           width={40}
           height={40}
-          className="w-[40px] h-[40px] rounded-[50%] mr-2"
+          className="chat-list-image-logo  "
         />
-        <div className="h-[40px] w-full">
+        <div className="h-[40px] w-full items-center justify-center">
           <h1
             className={`text-gray-500 font-semibold text-sm text-[12px] ${
               isEqualSelectedChat ? "text-black" : ""
@@ -105,9 +113,11 @@ const ChatList = ({ setIsOpen }) => {
           >
             {isGroupChat ? chatName : oppUserName}
           </h1>
-          <p className="text-gray-500  text-xs">
-            {latestMessage ? latestMessage.content.slice(0, 20) : "..."}
-          </p>
+          {latestMessage && (
+            <p className="text-gray-500  text-xs">
+              {latestMessage.content.slice(0, 20)}
+            </p>
+          )}
         </div>
       </div>
     );
@@ -117,7 +127,10 @@ const ChatList = ({ setIsOpen }) => {
     <div
       className={`left-list-width-container   ${smallScreenAndSelector}  p-2 rounded-lg chat-list-bg-shadow `}
     >
-      <NewGroupModel setGroupModel={setGroupModel} isGroupModel={isGroupModel} />
+      <NewGroupModel
+        setGroupModel={setGroupModel}
+        isGroupModel={isGroupModel}
+      />
       <ToastContainer />
       <div className="flex items-center  mb-2 justify-between">
         <div className="w-full input-container flex items-center self-start ">
@@ -129,16 +142,23 @@ const ChatList = ({ setIsOpen }) => {
           />
           <FaSearch />
         </div>
-        <button className="plus-button" onClick={()=>setGroupModel(true)}>
+        <button className="plus-button" onClick={() => setGroupModel(true)}>
           {}
           <HiOutlinePlus />
         </button>
       </div>
-      <div className="chat-list-scroll-container">
-        {chatsListSelector.map((item) => (
-          <ChatItem key={item._id} item={item} />
-        ))}
-      </div>
+
+      {loading ? (
+        <div className="chat-list-loader-container">
+          <Loader />
+        </div>
+      ) : (
+        <div className="chat-list-scroll-container">
+          {chatsListSelector.map((item) => (
+            <ChatItem key={item._id} item={item} />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

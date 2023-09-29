@@ -19,13 +19,6 @@ const NewGroupModel = ({ isGroupModel, setGroupModel }) => {
 
   const dispatch = useDispatch();
 
-  // const getToken =()=>{
-  //   const token = Cookies.get('jwt_token')
-  //   console.log(token);
-  //   if(token){
-  //     return window.location='/login'
-  //   }
-  // }
 
   const customStyles = {
     content: {
@@ -120,7 +113,7 @@ const NewGroupModel = ({ isGroupModel, setGroupModel }) => {
       setSelectedUsers(newList);
     };
     return (
-      <li className="bg-green-500  para px-2 py-1 rounded-lg items-center  cursor-pointer">
+      <li className="selected-user-container">
         <p className="para mr-1">{name}</p>
         <button onClick={removeSelectedUser}>
           <RxCross2 />
@@ -170,9 +163,7 @@ const NewGroupModel = ({ isGroupModel, setGroupModel }) => {
       // onAfterOpen={afterOpenModal}
       //   onRequestClose={closeModal}
       // style={customStyles}
-      className={
-        "w-[100%] m-auto flex items-center justify-center h-full bg-transparent"
-      }
+      className='custom-container'
       contentLabel="Example Modal"
     >
       <form

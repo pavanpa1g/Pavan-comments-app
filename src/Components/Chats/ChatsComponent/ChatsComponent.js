@@ -22,6 +22,7 @@ import io from "socket.io-client";
 // import animationData from "../../../animations/typing.json";
 import { baseUrl } from "@/utils/baseApi";
 import Image from "next/image";
+import { Loader } from "@/Components/Loader";
 
 const ENDPOINT = baseUrl;
 let socket, selectedChatCompare;
@@ -206,24 +207,24 @@ const ChatsComponent = () => {
     };
 
     return (
-      <div className="h-[100%] flex  flex-col relative box-border">
+      <div className="separate-chat-container">
         <div className="flex py-1 items-center top-profile-container">
           <Image
             src={isGroupChat ? groupPicture : selectedUser.picture}
             alt="profile"
             width={40}
             height={40}
-            className="rounded-[50%] w-[40px] h-[40px] mr-3"
+            className="image-logo"
           />
           <div>
-            <h1 className="text-gray-800 font-semibold">
+            <h1 className="text-color font-semibold">
               {isGroupChat
                 ? selectedChat.chatName
                 : selectedUser.email.slice(0, 1).toUpperCase()}
               {!isGroupChat && selectedUser.email.slice(1)}
             </h1>
             {!isGroupChat && (
-              <p className="text-gray-800 ">
+              <p className="text-color ">
                 {selectedUser.name.slice(0, 1).toUpperCase()}
                 {selectedUser.name.slice(1)}
               </p>
@@ -234,71 +235,82 @@ const ChatsComponent = () => {
           </button>
         </div>
 
-        {messages.length > 0 ? (
-          <div
-            className="bg-gray-100 border-2 border-red-500 flex-1 rounded-xl mb-1 pt-2 px-1 overflow-y-scroll "
-            ref={chatContainerRef}
-          >
-            {messages.map((m, i) => {
-              console.log(m);
-              console.log(m.sender._id === userSelector._id);
-              const marginLeft = isSameSenderMargin(
-                messages,
-                m,
-                i,
-                userSelector._id
-              );
-              return (
-                // <EachText key={item._id} item={item} />
-                <div key={m._id} className={`flex mb-auto`}>
-                  {(isSameSender(messages, m, i, userSelector._id) ||
-                    isLastMessage(messages, i, userSelector._id)) && (
-                    <Image
-                      src={m.sender.picture}
-                      width={25}
-                      height={25}
-                      alt="profile"
-                      className="mt-[7px] mr-1 w-[25px] h-[25px] rounded-[50%]"
-                    />
-                  )}
-                  <span
-                    className={`${
-                      m.sender._id === userSelector._id
-                        ? "bg-[#b9f5d0]"
-                        : "bg-[#bee3f8]"
-                    } rounded-[12px] py-[5px] px-[15px] max-w-[75%] text-black  `}
-                    style={{
-                      marginLeft: `${marginLeft}`,
-                      marginTop: `${
-                        isSameUser(messages, m, i, userSelector._id)
-                          ? "3px"
-                          : "10px"
-                      }`,
-                      overflowX: "hidden",
-                    }}
-                  >
-                    <p>{m.content}</p>
-                    <p className="text-gray-500 text-[8px] text-right">
-                      {getFormattedDate(m.createdAt)}
-                    </p>
-                  </span>
-                </div>
-              );
-            })}
-                    {isTyping ? (
-          <div>
-            {/* <Lottie
+        {loading ? (
+          <div className="loader-container">
+            <Loader />
+          </div>
+        ) : (
+          <>
+            {" "}
+            {messages.length > 0 ? (
+              <div className="chats-container-style" ref={chatContainerRef}>
+                {messages.map((m, i) => {
+                  const currentUser = JSON.parse(
+                    localStorage.getItem("userData")
+                  );
+                  console.log(m);
+                  console.log(m.sender._id === currentUser._id);
+                  const marginLeft = isSameSenderMargin(
+                    messages,
+                    m,
+                    i,
+                    currentUser._id
+                  );
+
+                  console.log("currentUser");
+                  return (
+                    // <EachText key={item._id} item={item} />
+                    <div key={m._id} className={`flex mb-auto`}>
+                      {(isSameSender(messages, m, i, currentUser._id) ||
+                        isLastMessage(messages, i, currentUser._id)) && (
+                        <Image
+                          src={m.sender.picture}
+                          width={25}
+                          height={25}
+                          alt="profile"
+                          className="mt-[7px] mr-1 w-[25px] h-[25px] rounded-[50%] message-img-logo"
+                        />
+                      )}
+                      <span
+                        className={`${
+                          m.sender._id === currentUser._id
+                            ? "bg-[#b9f5d0]"
+                            : "bg-[#bee3f8]"
+                        } rounded-[12px] py-[5px] px-[15px] max-w-[75%] text-black  `}
+                        style={{
+                          marginLeft: `${marginLeft}`,
+                          marginTop: `${
+                            isSameUser(messages, m, i, currentUser._id)
+                              ? "3px"
+                              : "10px"
+                          }`,
+                          overflowX: "hidden",
+                        }}
+                      >
+                        <p>{m.content}</p>
+                        <p className="text-gray-500 text-[8px] text-right">
+                          {getFormattedDate(m.createdAt)}
+                        </p>
+                      </span>
+                    </div>
+                  );
+                })}
+                {isTyping ? (
+                  <div>
+                    {/* <Lottie
               options={defaultOptions}
               width={70}
               style={{}}
             /> */}
-          </div>
-        ) : (
-          <></>
-        )}
-          </div>
-        ) : (
-          <NoMessages />
+                  </div>
+                ) : (
+                  <></>
+                )}
+              </div>
+            ) : (
+              <NoMessages />
+            )}
+          </>
         )}
 
         <div className="fixed-chat-container ">
@@ -320,7 +332,7 @@ const ChatsComponent = () => {
 
   return (
     <div
-      className={`right-list-width-container rounded-lg h-[100%] p-2 ${smallScreenAndSelector} left-container-chat-list h-full`}
+      className={`right-list-width-container  ${smallScreenAndSelector} left-container-chat-list h-full`}
     >
       {selectedChatSelector.data ? (
         <SelectedChatContainer />

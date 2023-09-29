@@ -2,6 +2,7 @@
     box-shadow: rgba(0, 0, 0, 0.15) 0px 15px 25px, rgba(0, 0, 0, 0.05) 0px 5px 10px;
     padding: 15px;
     width: 80%;
+    margin: auto;
 }
 
 @media screen and (min-width:768px) {
@@ -49,4 +50,28 @@
     width: 100%;
     overflow-x: scroll;
 
+}
+
+
+
+/* Define the styles for the .custom-container class */
+.custom-container {
+    width: 100%;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    background-color: transparent;
+}
+
+
+.selected-user-container {
+    background-color: #34d399;
+    padding: 4px 8px;
+    border-radius: 0.5rem;
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
 }

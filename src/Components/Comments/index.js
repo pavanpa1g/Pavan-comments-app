@@ -6,25 +6,24 @@ import { CommentModal } from "../CommentModal";
 import "./index.css";
 import Cookies from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";
-import { updateCommentsCountOnPost, updateLikeOnPost } from "@/store/features/postSlice";
+import {
+  updateCommentsCountOnPost,
+  updateLikeOnPost,
+} from "@/store/features/postSlice";
 
 import { Flip, toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { baseUrl } from "@/utils/baseApi";
 
-const Comments = ({ image,  username, _id, likedBy, likes,commentsCount }) => {
+const Comments = ({ image, username, _id, likedBy, likes, commentsCount }) => {
   const [comment, setComment] = useState("");
   const [commentModal, setCommentModal] = useState(false);
   const [loading, setLoading] = useState(false);
-
 
   const dispatch = useDispatch();
 
   const userSelector = useSelector((state) => state.user.users.user);
   const postSelector = useSelector((state) => state.post);
-
-
-
 
   const postComment = async () => {
     setLoading(true);
@@ -32,23 +31,20 @@ const Comments = ({ image,  username, _id, likedBy, likes,commentsCount }) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json", // Specify JSON content type
-         Authorization : `Bearer ${userSelector.token}`  ,
+        Authorization: `Bearer ${userSelector.token}`,
       },
-      body: JSON.stringify({ comment, imageId: _id}), // Pass the URL directly without `${}`
+      body: JSON.stringify({ comment, imageId: _id }), // Pass the URL directly without `${}`
     };
 
     try {
-      const response = await fetch(
-        `${baseUrl}/api/comment`,
-        options
-      );
+      const response = await fetch(`${baseUrl}/api/comment`, options);
       if (response.ok) {
         const data = await response.json();
-        const {fullComment} = data
-        const {commentedOn} = fullComment
-        dispatch(updateCommentsCountOnPost(commentedOn))
-        
-        toast.success('Successfully Commented', {
+        const { fullComment } = data;
+        const { commentedOn } = fullComment;
+        dispatch(updateCommentsCountOnPost(commentedOn));
+
+        toast.success("Successfully Commented", {
           position: "top-center",
           autoClose: 3000,
           transition: Flip,
@@ -57,8 +53,8 @@ const Comments = ({ image,  username, _id, likedBy, likes,commentsCount }) => {
         setComment("");
       } else {
         setLoading(false);
-        const {data} = await response.json()
-        const {message} = data
+        const { data } = await response.json();
+        const { message } = data;
         toast.error(message, {
           position: "top-center",
           autoClose: 3000,
@@ -70,7 +66,7 @@ const Comments = ({ image,  username, _id, likedBy, likes,commentsCount }) => {
       setLoading(false);
     }
 
-            setLoading(false);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -79,8 +75,6 @@ const Comments = ({ image,  username, _id, likedBy, likes,commentsCount }) => {
 
     // setIsLikedByMe(isLikedByMe);
   }, []);
-
-
 
   const handleLike = async () => {
     const url = `${baseUrl}/api/image/like/${_id}`;
@@ -97,24 +91,18 @@ const Comments = ({ image,  username, _id, likedBy, likes,commentsCount }) => {
       if (response.ok) {
         const data = await response.json();
         dispatch(updateLikeOnPost(data));
-
       } else {
         console.log("likesresponse", response);
       }
-
-
     } catch (error) {
       console.log("likeserror", error);
     }
-
   };
 
-  const likedByMe = likedBy.findIndex(item => item._id === userSelector._id)
-
+  const likedByMe = likedBy.findIndex((item) => item._id === userSelector._id);
 
   return (
     <>
-
       {commentModal ? (
         <CommentModal
           image={image}
@@ -126,44 +114,32 @@ const Comments = ({ image,  username, _id, likedBy, likes,commentsCount }) => {
         <div className="mb-4 mt-4 w-full">
           <ToastContainer />
           <div className="flex  items-center mb-1">
-            <label className="block text-gray-500 font-semibold mb-2 mr-auto">
-              Comment:
-            </label>
-            <div className="relative">
-              <button onClick={handleLike}>
+            <label className="comment-label">Comment:</label>
+            <div className="counts-container">
+              <button onClick={handleLike} className="like-icon-container">
                 {likedByMe === -1 || likedBy.includes(userSelector._id) ? (
-                  <AiOutlineHeart
-                    style={{ color: "gray" }}
-                    size={20}
-                    className="mr-4"
-                  />
+                  <AiOutlineHeart style={{ color: "gray" }} size={24} />
                 ) : (
-                  <AiTwotoneHeart
-                    style={{ color: "red" }}
-                    size={20}
-                    className="mr-4"
-                  />
+                  <AiTwotoneHeart style={{ color: "red" }} size={24} />
                 )}
               </button>
-              {likes > 0 && (
+              <p className="count-text">{likes}</p>
+              {/* {likes > 0 && (
                 <span className="comment-count text-white text-sm absolute bottom-4 left-3 bg-blue-500 rounded-full flex items-center justify-center">
                   {likes}
                 </span>
-              )}
+              )} */}
             </div>
-            <div className="relative ">
+            <div className="counts-container ">
               <button onClick={() => setCommentModal(true)}>
-                <BiCommentDetail
-                  style={{ color: "gray" }}
-                  size={20}
-                  className="mr-4"
-                />
+                <BiCommentDetail style={{ color: "gray" }} size={24} />
               </button>
-              {commentsCount > 0 && (
+              <p className="count-text">{commentsCount}</p>
+              {/* {commentsCount > 0 && (
                 <span className="comment-likes text-white text-sm absolute bottom-4 left-3 bg-blue-500 rounded-full flex items-center justify-center px-2">
                   {commentsCount}
                 </span>
-              )}
+              )} */}
             </div>
           </div>
           <div className="flex justify-between items-center">
@@ -178,11 +154,12 @@ const Comments = ({ image,  username, _id, likedBy, likes,commentsCount }) => {
             ></textarea>
             <button
               type="button"
-              className={`post-button ${
-                comment
-                  ? "text-blue-500 hover:text-blue-500 hover:border-blue-500"
-                  : "bg-white text-gray-500"
-              }  font-bold py-2 px-4 rounded`}
+              // className={`post-button ${
+              //   comment
+              //     ? "text-blue-500 hover:text-blue-500 hover:border-blue-500"
+              //     : "bg-white text-gray-500"
+              // }  font-bold py-2 px-4 rounded`}
+              className={`post-button ${comment ? "hover-post-button" : ""}`}
               disabled={!comment}
               onClick={postComment}
             >

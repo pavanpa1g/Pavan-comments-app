@@ -5,7 +5,7 @@
 }
 
 
-@media screen and (min-width:413px) {
+@media screen and (min-width:576px) {
     .image-container-comment{
         width: 49%;
     }
@@ -46,18 +46,8 @@ textarea {
     outline: none;
 }
 
-/* ::-webkit-textfield-decoration-container{
-    width:0;
-    height: 0;
-} */
-
-.post-button{
-    border: 1px solid gray;
-
-    font-weight: 700;
-
-    border-radius: 6px;
-    padding:4px 4px;
-    /* height: 30px; */
-    margin-left: 10px;
+.para {
+    color: #6b7280;
+    margin-left: auto;
+    font-size: 8px;
 }
