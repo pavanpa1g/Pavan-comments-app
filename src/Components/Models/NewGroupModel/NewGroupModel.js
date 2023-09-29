@@ -4,10 +4,11 @@ import { RxCross2 } from "react-icons/rx";
 
 import "./groupmodel.css";
 import Cookies from "js-cookie";
-import { getToken } from "@/Components/apiCallsAndLogics/logics";
+import { getToken } from "@/utils/ApiCallsAndLogics/logics";
 import { useDispatch } from "react-redux";
 import { addSingleChatList } from "@/store/features/chatSlice";
 import { baseUrl } from "@/utils/baseApi";
+import Image from "next/image";
 
 const NewGroupModel = ({ isGroupModel, setGroupModel }) => {
   const [groupNameInput, setGroupNameInput] = useState("");
@@ -82,8 +83,10 @@ const NewGroupModel = ({ isGroupModel, setGroupModel }) => {
         className="bg-gray-200 mb-2 rounded-lg flex items-center p-1 cursor-pointer"
         onClick={() => onAddToSelectedUsers(item)}
       >
-        <img
+        <Image
           src={picture}
+          width={30}
+          height={30}
           alt="profile"
           className="w-[30px] h-[30px] rounded-[50%] mr-2"
         />

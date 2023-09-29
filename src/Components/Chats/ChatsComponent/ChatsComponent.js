@@ -14,25 +14,26 @@ import {
   isSameSender,
   isSameSenderMargin,
   isSameUser,
-} from "@/Components/apiCallsAndLogics/logics";
+} from "@/utils/ApiCallsAndLogics/logics";
 import getFormattedDate from "@/utils/Datefunction";
 
 import io from "socket.io-client";
 // import Lottie from "react-lottie";
 // import animationData from "../../../animations/typing.json";
 import { baseUrl } from "@/utils/baseApi";
+import Image from "next/image";
 
 const ENDPOINT = baseUrl;
 let socket, selectedChatCompare;
 
-const defaultOptions = {
-  loop: true,
-  autoplay: true,
-  animationData: animationData,
-  renderSettings: {
-    preserveAspectRatio: "xMidYMid slice",
-  },
-};
+// const defaultOptions = {
+//   loop: true,
+//   autoplay: true,
+//   animationData: animationData,
+//   renderSettings: {
+//     preserveAspectRatio: "xMidYMid slice",
+//   },
+// };
 
 const ChatsComponent = () => {
   const selectedChatSelector = useSelector((state) => state.chat.selectedChat);
@@ -207,9 +208,11 @@ const ChatsComponent = () => {
     return (
       <div className="h-[100%] flex  flex-col relative box-border">
         <div className="flex py-1 items-center top-profile-container">
-          <img
+          <Image
             src={isGroupChat ? groupPicture : selectedUser.picture}
             alt="profile"
+            width={40}
+            height={40}
             className="rounded-[50%] w-[40px] h-[40px] mr-3"
           />
           <div>
@@ -250,8 +253,10 @@ const ChatsComponent = () => {
                 <div key={m._id} className={`flex mb-auto`}>
                   {(isSameSender(messages, m, i, userSelector._id) ||
                     isLastMessage(messages, i, userSelector._id)) && (
-                    <img
+                    <Image
                       src={m.sender.picture}
+                      width={25}
+                      height={25}
                       alt="profile"
                       className="mt-[7px] mr-1 w-[25px] h-[25px] rounded-[50%]"
                     />

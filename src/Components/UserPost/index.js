@@ -2,6 +2,7 @@ import React from "react";
 import Comments from "../Comments";
 import getFormattedDate from "@/utils/Datefunction";
 import "./index.css";
+import Image from "next/image";
 
 const UserPost = ({ item }) => {
   const { postedBy, imageUrl, _id, createdAt, likedBy, likes, commentsCount } =
@@ -24,7 +25,7 @@ const UserPost = ({ item }) => {
           {getFormattedDate(createdAt)}
         </p>
       </div>
-      <img src={imageUrl} alt="logo" className="image hover:object-contain" loading="lazy" />
+      <Image width={300} height={180} src={imageUrl} alt="logo" className="image hover:object-contain" loading="lazy" />
       <Comments
         image={imageUrl}
         // imageId={_id}

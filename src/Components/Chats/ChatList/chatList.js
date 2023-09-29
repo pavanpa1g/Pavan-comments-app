@@ -12,6 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "./chatlist.css";
 import NewGroupModel from "@/Components/Models/NewGroupModel/NewGroupModel";
 import { baseUrl } from "@/utils/baseApi";
+import Image from "next/image";
 
 const ChatList = ({ setIsOpen }) => {
   const [loggedInUser, serLoggedInUser] = useState({});
@@ -89,9 +90,11 @@ const ChatList = ({ setIsOpen }) => {
         }`}
         onClick={handleChatSelection}
       >
-        <img
+        <Image
           src={isGroupChat ? groupPicture : oppositeUser[0].picture}
           alt="profile"
+          width={40}
+          height={40}
           className="w-[40px] h-[40px] rounded-[50%] mr-2"
         />
         <div className="h-[40px] w-full">

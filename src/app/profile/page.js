@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addPosts, removeAllPosts } from "@/store/features/postSlice";
 import ProtectedRoute from "../../Components/ProtectedRoute";
 import { baseUrl } from "@/utils/baseApi";
+import Image from "next/image";
 
 const ProfileModal = () => {
   const [loading, setLoading] = useState(false);
@@ -76,10 +77,12 @@ const ProfileModal = () => {
             <div className="flex items-center">
               <div className="flex my-4 mr-4">
                 {/* <BsPersonCircle className="text-gray-400" size={150} /> */}
-                <img
+                <Image
                   src={picture}
                   alt={"profile"}
                   className="rounded-full w-[150px] h-[150px]"
+                  width={150}
+                  height={150}
                 />
               </div>
               <div className="">
@@ -107,10 +110,12 @@ const ProfileModal = () => {
                 <>
                   {userPosts.length === 0 ? (
                     <div className="no-posts-container w-full justify-center items-center  h-80">
-                      <img
+                      <Image
                         src="https://assets.ccbp.in/frontend/react-js/nxt-watch-no-saved-videos-img.png"
                         alt="no posts"
                         className="no-posts-image"
+                        height={240}
+                        width={240}
                       />
                       <h1 className="text-gray-500 font-bold">No Posts Yet!</h1>
                     </div>

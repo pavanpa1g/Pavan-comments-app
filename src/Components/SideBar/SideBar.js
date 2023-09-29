@@ -10,6 +10,7 @@ import Cookies from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import { addSelectedChat, addSingleChatList } from "@/store/features/chatSlice";
 import { baseUrl } from "@/utils/baseApi";
+import Image from "next/image";
 
 const data = [
   { id: 1 },
@@ -54,9 +55,11 @@ const RenderUsers = ({ item, handleClick }) => {
       className="rounded-lg p-2 flex chat-item-container mb-3"
       onClick={() => handleClick(_id)}
     >
-      <img
+      <Image
         src={picture}
         alt={name}
+        width={40}
+        height={40}
         className="w-[40px] h-[40px] rounded-[50%] mr-3"
       />
       <div>
@@ -114,14 +117,13 @@ const SideBar = ({ isOpen, setIsOpen }) => {
       if (response.ok) {
         const data = await response.json();
         setSearchResults(data);
-
       } else {
         toast.error(response, {
           position: "top-center",
           autoClose: 3000,
           transition: Flip,
         });
-        console.log(response)
+        console.log(response);
       }
     } catch (error) {
       console.log("error", error);
@@ -152,7 +154,6 @@ const SideBar = ({ isOpen, setIsOpen }) => {
   }, [isOpen]);
 
   const accessChat = async (userId) => {
-
     try {
       const config = {
         method: "POST",

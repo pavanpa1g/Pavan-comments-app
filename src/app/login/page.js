@@ -9,7 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import "./login.css";
 import TextInput from "@/Components/TextInput/TextInput";
-import { handleSignUp } from "@/Components/apiCallsAndLogics/apicalls";
+import { handleSignUp } from "@/utils/ApiCallsAndLogics/apicalls";
 import { addUserData } from "@/store/features/userSlice";
 import LoginForm from "@/Components/LoginForm/LoginForm";
 

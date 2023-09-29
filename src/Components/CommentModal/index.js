@@ -7,6 +7,7 @@ import { Loader } from "../Loader";
 import getFormattedDate from "../../utils/Datefunction";
 import { useSelector } from "react-redux";
 import { baseUrl } from "@/utils/baseApi";
+import Image from "next/image";
 
 const EachComment = ({ item }) => {
   const { _id, commentedBy, comment, createdAt } = item;
@@ -14,7 +15,7 @@ const EachComment = ({ item }) => {
   return (
     <li key={_id} className="flex mb-3 list-item-comment">
       <div className="rounded-full flex justify-center items-center mr-3 w-[20px] h-[20px]">
-        <img src={picture} alt={name} className="rounded-full w-[20px] h-[20px] self-start" />
+        <Image src={picture} width={20} height={20} alt={name} className="rounded-full w-[20px] h-[20px] self-start" />
       </div>
       <div className="w-full">
         <div className="flex items-center justify-between w-full pr-3">
@@ -89,7 +90,7 @@ export const CommentModal = ({ image, setCommentModal, imageId, username }) => {
               </h1>
             </div>
             <div className="h-full flex justify-center items-center w-full">
-              <img src={`${image}`} alt="image" className="modal-image " />
+              <Image src={`${image}`} width={300} height={200} alt="image" className="modal-image " />
             </div>
           </div>
           <div className="w-full sm:border-l-2 border-white pt-2 pl-2 half-container">
