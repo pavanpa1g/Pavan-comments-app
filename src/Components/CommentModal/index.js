@@ -11,7 +11,7 @@ import Image from "next/image";
 
 const EachComment = ({ item }) => {
   const { _id, commentedBy, comment, createdAt } = item;
-  const {name,picture} = commentedBy
+  const { name, picture } = commentedBy
   return (
     <li key={_id} className="flex mb-3 list-item-comment">
       <div className="rounded-full flex justify-center items-center mr-3 w-[20px] h-[20px]">
@@ -43,12 +43,14 @@ export const CommentModal = ({ image, setCommentModal, imageId, username }) => {
 
     const options = {
       method: 'GET',
-      headers:{'Content-Type':'application/json',
-    "Authorization": `Bearer ${userSelector.token}`},
+      headers: {
+        'Content-Type': 'application/json',
+        "Authorization": `Bearer ${userSelector.token}`
+      },
     }
     try {
       const response = await fetch(
-        `${baseUrl}/api/comment/${imageId}`,options
+        `${baseUrl}/api/comment/${imageId}`, options
       );
       if (response.ok) {
         const data = await response.json();
@@ -90,7 +92,7 @@ export const CommentModal = ({ image, setCommentModal, imageId, username }) => {
               </h1>
             </div>
             <div className="h-full flex justify-center items-center w-full">
-              <Image src={`${image}`} width={300} height={200} alt="image" className="modal-image " />
+              <Image src={`${image}`} width={260} height={180} alt="image" className="modal-image " />
             </div>
           </div>
           <div className="w-full sm:border-l-2 border-white pt-2 pl-2 half-container">

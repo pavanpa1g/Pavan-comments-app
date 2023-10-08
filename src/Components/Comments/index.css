@@ -46,3 +46,15 @@
   border-color: #3b82f6;
 
 }
+
+
+textarea{
+  color: black;
+  resize: none;
+}
+
+.flex-between-center{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

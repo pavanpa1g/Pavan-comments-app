@@ -75,6 +75,9 @@ const NewGroupModel = ({ isGroupModel, setGroupModel }) => {
       <div
         className="bg-gray-200 mb-2 rounded-lg flex items-center p-1 cursor-pointer"
         onClick={() => onAddToSelectedUsers(item)}
+        style={
+          { cursor: 'pointer' }
+        }
       >
         <Image
           src={picture}
@@ -127,7 +130,7 @@ const NewGroupModel = ({ isGroupModel, setGroupModel }) => {
 
     const groupData = {
       users: JSON.stringify(selectedUsers.map((u) => u._id),),
-      name:groupNameInput
+      name: groupNameInput
     };
 
     console.log("groupData", groupData);

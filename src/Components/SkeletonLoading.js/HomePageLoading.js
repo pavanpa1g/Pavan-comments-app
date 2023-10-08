@@ -1,8 +1,10 @@
 import React from "react";
 import "./skeleton.css";
 
+
+
 const HomePageLoading = () => {
-  const data = [{ id: 1 }, { id: 2 }, { id: 3 },{ id: 4 }, { id: 5 }, { id: 7 }];
+  const data = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }, { id: 7 }];
   return (
     <div className=" skeleton-container ">
       {data.map((item) => (
@@ -41,7 +43,7 @@ const HomePageLoading = () => {
           </div>
           <div className="skeleton-actions">
 
-            </div>
+          </div>
         </div>
       ))}
     </div>

@@ -14,8 +14,9 @@ import {
 import { Flip, toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { baseUrl } from "@/utils/baseApi";
+import { updateCommentsCountOnMyPost, updateLikeOnMyPost } from "@/store/features/myPostSlice";
 
-const Comments = ({ image, username, _id, likedBy, likes, commentsCount }) => {
+const Comments = ({ image, username, _id, likedBy, likes, commentsCount, fromProfile }) => {
   const [comment, setComment] = useState("");
   const [commentModal, setCommentModal] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -42,7 +43,8 @@ const Comments = ({ image, username, _id, likedBy, likes, commentsCount }) => {
         const data = await response.json();
         const { fullComment } = data;
         const { commentedOn } = fullComment;
-        dispatch(updateCommentsCountOnPost(commentedOn));
+
+        dispatch(fromProfile ? updateCommentsCountOnPost(commentedOn) : updateCommentsCountOnMyPost(commentedOn));
 
         toast.success("Successfully Commented", {
           position: "top-center",
@@ -69,12 +71,12 @@ const Comments = ({ image, username, _id, likedBy, likes, commentsCount }) => {
     setLoading(false);
   };
 
-  useEffect(() => {
-    const thisPost = postSelector.filter((item) => item._id === _id);
-    const isLikedByMe = thisPost[0].likedBy.includes(userSelector._id);
+  // useEffect(() => {
+  //   const thisPost = postSelector.filter((item) => item._id === _id);
+  //   const isLikedByMe = thisPost[0].likedBy.includes(userSelector._id);
 
-    // setIsLikedByMe(isLikedByMe);
-  }, []);
+  //   // setIsLikedByMe(isLikedByMe);
+  // }, []);
 
   const handleLike = async () => {
     const url = `${baseUrl}/api/image/like/${_id}`;
@@ -90,7 +92,7 @@ const Comments = ({ image, username, _id, likedBy, likes, commentsCount }) => {
       const response = await fetch(url, options);
       if (response.ok) {
         const data = await response.json();
-        dispatch(updateLikeOnPost(data));
+        dispatch(fromProfile ? updateLikeOnPost(data) : updateLikeOnMyPost(data));
       } else {
         console.log("likesresponse", response);
       }
@@ -142,7 +144,7 @@ const Comments = ({ image, username, _id, likedBy, likes, commentsCount }) => {
               )} */}
             </div>
           </div>
-          <div className="flex justify-between items-center">
+          <div className="flex-between-center">
             <textarea
               id="comment"
               name="comment"
@@ -154,11 +156,6 @@ const Comments = ({ image, username, _id, likedBy, likes, commentsCount }) => {
             ></textarea>
             <button
               type="button"
-              // className={`post-button ${
-              //   comment
-              //     ? "text-blue-500 hover:text-blue-500 hover:border-blue-500"
-              //     : "bg-white text-gray-500"
-              // }  font-bold py-2 px-4 rounded`}
               className={`post-button ${comment ? "hover-post-button" : ""}`}
               disabled={!comment}
               onClick={postComment}

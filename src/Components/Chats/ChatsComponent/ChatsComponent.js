@@ -45,7 +45,7 @@ const ChatsComponent = () => {
 
   const NoChatSelected = () => {
     return (
-      <div className="flex items-center justify-center h-[100%] w-[100%]">
+      <div className="noChatsSelected-container">
         <h1 className="text-gray-600 font-semibold">No Chat Selected</h1>
       </div>
     );
@@ -223,10 +223,9 @@ const ChatsComponent = () => {
                 : selectedUser.email.slice(0, 1).toUpperCase()}
               {!isGroupChat && selectedUser.email.slice(1)}
             </h1>
-            {!isGroupChat && (
+            {!isGroupChat && isTyping && (
               <p className="text-color ">
-                {selectedUser.name.slice(0, 1).toUpperCase()}
-                {selectedUser.name.slice(1)}
+                Typing...
               </p>
             )}
           </div>
@@ -248,8 +247,6 @@ const ChatsComponent = () => {
                   const currentUser = JSON.parse(
                     localStorage.getItem("userData")
                   );
-                  console.log(m);
-                  console.log(m.sender._id === currentUser._id);
                   const marginLeft = isSameSenderMargin(
                     messages,
                     m,
@@ -257,33 +254,31 @@ const ChatsComponent = () => {
                     currentUser._id
                   );
 
-                  console.log("currentUser");
+
                   return (
                     // <EachText key={item._id} item={item} />
                     <div key={m._id} className={`flex mb-auto`}>
                       {(isSameSender(messages, m, i, currentUser._id) ||
                         isLastMessage(messages, i, currentUser._id)) && (
-                        <Image
-                          src={m.sender.picture}
-                          width={25}
-                          height={25}
-                          alt="profile"
-                          className="mt-[7px] mr-1 w-[25px] h-[25px] rounded-[50%] message-img-logo"
-                        />
-                      )}
+                          <Image
+                            src={m.sender.picture}
+                            width={25}
+                            height={25}
+                            alt="profile"
+                            className="message-img-logo"
+                          />
+                        )}
                       <span
-                        className={`${
-                          m.sender._id === currentUser._id
-                            ? "bg-[#b9f5d0]"
-                            : "bg-[#bee3f8]"
-                        } rounded-[12px] py-[5px] px-[15px] max-w-[75%] text-black  `}
+                        className={`${m.sender._id === currentUser._id
+                          ? "current-user-bg-color"
+                          : "other-user-bg-color"
+                          } each-text-container `}
                         style={{
                           marginLeft: `${marginLeft}`,
-                          marginTop: `${
-                            isSameUser(messages, m, i, currentUser._id)
-                              ? "3px"
-                              : "10px"
-                          }`,
+                          marginTop: `${isSameUser(messages, m, i, currentUser._id)
+                            ? "3px"
+                            : "10px"
+                            }`,
                           overflowX: "hidden",
                         }}
                       >
@@ -295,17 +290,13 @@ const ChatsComponent = () => {
                     </div>
                   );
                 })}
-                {isTyping ? (
+                {/* {isTyping ? (
                   <div>
-                    {/* <Lottie
-              options={defaultOptions}
-              width={70}
-              style={{}}
-            /> */}
+
                   </div>
                 ) : (
                   <></>
-                )}
+                )} */}
               </div>
             ) : (
               <NoMessages />

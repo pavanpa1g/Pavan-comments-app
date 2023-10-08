@@ -47,7 +47,6 @@
 
 .left-container-chat-list {
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
-
 }
 
 .top-profile-container > button {
@@ -60,19 +59,18 @@
   font-size: 12px;
 }
 
-.right-list-width-container{
-    width: 100%;
-    height: 100%;
-    border-radius: 8px;
-    padding: 8px;
+.right-list-width-container {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  padding: 8px;
 }
 
-@media screen and (min-width:768px) {
-    .right-list-width-container{
-        width: 64%;
-    }
+@media screen and (min-width: 768px) {
+  .right-list-width-container {
+    width: 64%;
+  }
 }
-
 
 .separate-chat-container {
   height: 100%;
@@ -82,30 +80,26 @@
   box-sizing: border-box;
 }
 
-
-.text-color{
+.text-color {
   color: #2c2929;
 }
 
-
-.loader-container{
+.loader-container {
   display: flex;
   flex-direction: column;
-  flex:1;
+  flex: 1;
   align-items: center;
   justify-content: center;
 }
 
-
-.image-logo{
+.image-logo {
   border-radius: 50%;
   margin-right: 8px;
 }
 
-
 /* mt-[7px] mr-1 w-[25px] h-[25px] rounded-[50%] */
 
-.message-img-logo{
+.message-img-logo {
   margin-top: 7px;
   margin-right: 4px;
   border-radius: 50%;
@@ -119,4 +113,39 @@
   padding-top: 0.5rem;
   padding-right: 0.25rem;
   overflow-y: scroll;
+}
+
+.current-user-bg-color {
+  background-color: #b9f5d0;
+}
+
+.other-user-bg-color {
+  background-color: #bee3f8;
+}
+
+.each-text-container {
+  border-radius: 12px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
+  max-width: 75%;
+  color: #000;
+}
+
+.noChatsSelected-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+
+.message-img-logo{
+  margin-top: 7px;
+    margin-right: 1px;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
 }

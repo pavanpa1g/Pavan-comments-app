@@ -17,7 +17,7 @@ import { RxCross2 } from "react-icons/rx";
 import { useSelector, useDispatch } from "react-redux";
 import { addToken, addUserData } from "@/store/features/userSlice";
 import HomePageLoading from "@/Components/SkeletonLoading.js/HomePageLoading";
-import {addPostSinglePost, addPosts, removeAllPosts } from "@/store/features/postSlice";
+import { addPostSinglePost, addPosts, removeAllPosts } from "@/store/features/postSlice";
 import { Flip, toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { baseUrl } from "@/utils/baseApi";
@@ -35,31 +35,31 @@ export default function Home() {
   const [images, setImages] = useState([]);
 
   const selector = useSelector((state) => state.user.users.user);
-  const tokenSelector = useSelector(state=> state.user.token)
+  const tokenSelector = useSelector(state => state.user.token)
   const postSelector = useSelector((state) => state.post);
+
+
   const dispatch = useDispatch();
 
 
-  const fetchAllPosts =async()=>{
+  const fetchAllPosts = async () => {
     setImagesLoading(true)
     const url = `${baseUrl}/api/image`
     const token = Cookies.get('jwt_token')
     const options = {
-      method:'GET',
-      headers:{
-        Authorization:`Bearer ${token}`
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`
       }
     }
 
 
     try {
-      const response = await fetch(url,options)
-      if(response.ok){
-        const data  = await response.json()
-        dispatch(removeAllPosts())
+      const response = await fetch(url, options)
+      if (response.ok) {
+        const data = await response.json()
         dispatch(addPosts(data))
-                console.log(data)
-      }else{
+      } else {
         const { message } = await response.json();
         toast.error(message, {
           position: "top-center",
@@ -69,11 +69,11 @@ export default function Home() {
       }
     } catch (error) {
       console.log("error", error);
-        toast.error(error, {
-          position: "top-center",
-          autoClose: 3000,
-          transition: Flip,
-        });
+      toast.error(error, {
+        position: "top-center",
+        autoClose: 3000,
+        transition: Flip,
+      });
     }
     setImagesLoading(false)
   }
@@ -86,7 +86,6 @@ export default function Home() {
     }
     dispatch(addToken(token))
 
-    console.log("token 1",tokenSelector)
 
     const userData = localStorage.getItem("userData");
     if (userData === null || !userData) {
@@ -95,6 +94,7 @@ export default function Home() {
       const user = JSON.parse(userData);
       dispatch(addUserData(user));
     }
+
 
     fetchAllPosts()
   }, []);
@@ -106,7 +106,7 @@ export default function Home() {
   const uploadUrlTOBackend = async (url) => {
     const { token } = selector;
     console.log("token", token);
-    if(!token){
+    if (!token) {
       Cookies.remove('jwt_token')
       localStorage.removeItem('userData')
       router.replace('/')
@@ -153,7 +153,7 @@ export default function Home() {
     setLoading(false);
     setImagesLoading(false);
     setSelectedImage("");
-  
+
   };
 
   const uploadImage = async (e) => {
@@ -231,10 +231,11 @@ export default function Home() {
           <HomePageLoading />
         ) : (
           <ul className="flex justify-between flex-wrap  gap-1 my-2">
-            {postSelector.map((item) =>{ 
+            {postSelector.map((item) => {
               return (
-              <UserPost item={item} key={item._id} />
-            )})}
+                <UserPost item={item} key={item._id} fromProfile={true} />
+              )
+            })}
           </ul>
         )}
       </div>

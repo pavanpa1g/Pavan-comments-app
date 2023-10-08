@@ -4,7 +4,7 @@ import getFormattedDate from "@/utils/Datefunction";
 import "./index.css";
 import Image from "next/image";
 
-const UserPost = ({ item }) => {
+const UserPost = ({ item, fromProfile }) => {
   const { postedBy, imageUrl, _id, createdAt, likedBy, likes, commentsCount } =
     item;
   const { name, email } = postedBy;
@@ -35,6 +35,7 @@ const UserPost = ({ item }) => {
         likedBy={likedBy}
         likes={likes}
         commentsCount={commentsCount}
+        fromProfile={fromProfile}
       />
     </li>
   );

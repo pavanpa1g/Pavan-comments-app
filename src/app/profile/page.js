@@ -8,10 +8,11 @@ import { BsPersonCircle } from "react-icons/bs";
 import UserPost from "@/Components/UserPost";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
-import { addPosts, removeAllPosts } from "@/store/features/postSlice";
+import { addLoadPosts, addPosts, removeAllPosts } from "@/store/features/postSlice";
 import ProtectedRoute from "../../Components/ProtectedRoute";
 import { baseUrl } from "@/utils/baseApi";
 import Image from "next/image";
+import { addMyPosts } from "@/store/features/myPostSlice";
 
 const ProfileModal = () => {
   const [loading, setLoading] = useState(false);
@@ -19,7 +20,7 @@ const ProfileModal = () => {
   const [postLoading, setPostLoading] = useState(false);
   const [currentUserData, setCurrentUserData] = useState({ name: '', email: '', picture: '' })
 
-  const userSelector = useSelector((state) => state.user.users.user);
+  const myPostsSelector = useSelector((state) => state.myPost);
 
 
 
@@ -35,7 +36,7 @@ const ProfileModal = () => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${currentUserData.token}`,
+        Authorization: `Bearer ${Cookies.get('jwt_token')}`,
       },
     };
     const url = `${baseUrl}/api/image/my/posts`;
@@ -44,9 +45,7 @@ const ProfileModal = () => {
       const response = await fetch(url, options);
       if (response.ok) {
         const data = await response.json();
-        console.log("data", data);
-        dispatch(removeAllPosts());
-        dispatch(addPosts(data));
+        dispatch(addMyPosts(data));
         setUserPosts(data);
       }
     } catch (error) {
@@ -113,7 +112,7 @@ const ProfileModal = () => {
                 </div>
               ) : (
                 <>
-                  {userPosts.length === 0 ? (
+                  {myPostsSelector.length === 0 ? (
                     <div className="no-posts-container w-full justify-center items-center  h-80">
                       <Image
                         src="https://assets.ccbp.in/frontend/react-js/nxt-watch-no-saved-videos-img.png"
@@ -126,7 +125,7 @@ const ProfileModal = () => {
                     </div>
                   ) : (
                     <ul className="flex w-full flex-wrap justify-between">
-                      {userPosts.map((item) => (
+                      {myPostsSelector.map((item) => (
                         <UserPost item={item} key={item._id} />
                       ))}
                     </ul>
