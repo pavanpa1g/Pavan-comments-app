@@ -14,9 +14,20 @@ import {
 import { Flip, toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { baseUrl } from "@/utils/baseApi";
-import { updateCommentsCountOnMyPost, updateLikeOnMyPost } from "@/store/features/myPostSlice";
+import {
+  updateCommentsCountOnMyPost,
+  updateLikeOnMyPost,
+} from "@/store/features/myPostSlice";
 
-const Comments = ({ image, username, _id, likedBy, likes, commentsCount, fromProfile }) => {
+const Comments = ({
+  image,
+  username,
+  _id,
+  likedBy,
+  likes,
+  commentsCount,
+  fromProfile,
+}) => {
   const [comment, setComment] = useState("");
   const [commentModal, setCommentModal] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -24,7 +35,6 @@ const Comments = ({ image, username, _id, likedBy, likes, commentsCount, fromPro
   const dispatch = useDispatch();
 
   const userSelector = useSelector((state) => state.user.users.user);
-  const postSelector = useSelector((state) => state.post);
 
   const postComment = async () => {
     setLoading(true);
@@ -38,13 +48,17 @@ const Comments = ({ image, username, _id, likedBy, likes, commentsCount, fromPro
     };
 
     try {
-      const response = await fetch(`${baseUrl}/api/comment`, options);
+      const response = await fetch(`/api/image/comment`, options);
       if (response.ok) {
         const data = await response.json();
         const { fullComment } = data;
         const { commentedOn } = fullComment;
 
-        dispatch(fromProfile ? updateCommentsCountOnPost(commentedOn) : updateCommentsCountOnMyPost(commentedOn));
+        dispatch(
+          fromProfile
+            ? updateCommentsCountOnPost(commentedOn)
+            : updateCommentsCountOnMyPost(commentedOn)
+        );
 
         toast.success("Successfully Commented", {
           position: "top-center",
@@ -71,32 +85,36 @@ const Comments = ({ image, username, _id, likedBy, likes, commentsCount, fromPro
     setLoading(false);
   };
 
-  // useEffect(() => {
-  //   const thisPost = postSelector.filter((item) => item._id === _id);
-  //   const isLikedByMe = thisPost[0].likedBy.includes(userSelector._id);
-
-  //   // setIsLikedByMe(isLikedByMe);
-  // }, []);
-
   const handleLike = async () => {
-    const url = `${baseUrl}/api/image/like/${_id}`;
+    const url = `/api/image/like/${_id}`;
     const options = {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${Cookies.get("jwt_token")}`,
-        // Specify JSON content type
       },
     };
     try {
       const response = await fetch(url, options);
+      const data = await response.json();
       if (response.ok) {
-        const data = await response.json();
-        dispatch(fromProfile ? updateLikeOnPost(data) : updateLikeOnMyPost(data));
+        dispatch(
+          fromProfile ? updateLikeOnPost(data) : updateLikeOnMyPost(data)
+        );
       } else {
+        toast.error(data.message, {
+          position: "top-center",
+          autoClose: 3000,
+          transition: Flip,
+        });
         console.log("likesresponse", response);
       }
     } catch (error) {
+      toast.error(error.message, {
+        position: "top-center",
+        autoClose: 3000,
+        transition: Flip,
+      });
       console.log("likeserror", error);
     }
   };
@@ -114,7 +132,6 @@ const Comments = ({ image, username, _id, likedBy, likes, commentsCount, fromPro
         />
       ) : (
         <div className="mb-4 mt-4 w-full">
-          <ToastContainer />
           <div className="flex  items-center mb-1">
             <label className="comment-label">Comment:</label>
             <div className="counts-container">
@@ -125,23 +142,15 @@ const Comments = ({ image, username, _id, likedBy, likes, commentsCount, fromPro
                   <AiTwotoneHeart style={{ color: "red" }} size={24} />
                 )}
               </button>
-              <p className="count-text">{likes}</p>
-              {/* {likes > 0 && (
-                <span className="comment-count text-white text-sm absolute bottom-4 left-3 bg-blue-500 rounded-full flex items-center justify-center">
-                  {likes}
-                </span>
-              )} */}
+              <p className="count-text">{likes > 0 ? likes : ""}</p>
             </div>
             <div className="counts-container ">
               <button onClick={() => setCommentModal(true)}>
                 <BiCommentDetail style={{ color: "gray" }} size={24} />
               </button>
-              <p className="count-text">{commentsCount}</p>
-              {/* {commentsCount > 0 && (
-                <span className="comment-likes text-white text-sm absolute bottom-4 left-3 bg-blue-500 rounded-full flex items-center justify-center px-2">
-                  {commentsCount}
-                </span>
-              )} */}
+              <p className="count-text">
+                {commentsCount > 0 ? commentsCount : ""}
+              </p>
             </div>
           </div>
           <div className="flex-between-center">

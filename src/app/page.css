@@ -62,6 +62,7 @@ textarea {
 .upload-btn{
     background-color: #ffcb74;
     background-color: #d36bcb;
+    cursor: pointer;
 }
 
 .upload-btn:hover{

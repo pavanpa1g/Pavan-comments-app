@@ -55,15 +55,19 @@
 
 
 .chat-item-bg-container{
-    box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
-    padding: 14px 8px;
+    /* box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px; */
+    padding: 0.75rem 0.5rem;
+}
+
+.chat-item-bg-container:hover{
+    background-color:rgb(196 181 253 / var(--tw-bg-opacity)) ;
+    
 }
 
 
 .chat-list-scroll-container{
     padding: 4px 1px;
     height: 93%;
-
     overflow-y: scroll;
 }
 
@@ -95,7 +99,7 @@
 
 .chat-list-image-logo{
     border-radius: 50%;
-    margin-right: 8px;
+    margin-right: 0.75rem;
 }
 
 .chat-list-loader-container{

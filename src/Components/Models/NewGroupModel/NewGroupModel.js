@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { addSingleChatList } from "@/store/features/chatSlice";
 import { baseUrl } from "@/utils/baseApi";
 import Image from "next/image";
+import { Flip, toast } from "react-toastify";
 
 const NewGroupModel = ({ isGroupModel, setGroupModel }) => {
   const [groupNameInput, setGroupNameInput] = useState("");
@@ -18,7 +19,6 @@ const NewGroupModel = ({ isGroupModel, setGroupModel }) => {
   const [selectedUsers, setSelectedUsers] = useState([]);
 
   const dispatch = useDispatch();
-
 
   const customStyles = {
     content: {
@@ -32,7 +32,7 @@ const NewGroupModel = ({ isGroupModel, setGroupModel }) => {
   };
   const searchUsers = async () => {
     setLoading(true);
-    const url = `${baseUrl}/api/user?search=${userTextInput}`;
+    const url = `/api/user?search=${userTextInput}`;
     const options = {
       method: "GET",
       headers: {
@@ -66,8 +66,6 @@ const NewGroupModel = ({ isGroupModel, setGroupModel }) => {
     }
   };
 
-
-
   const UserItem = ({ item }) => {
     const { name, email, picture } = item;
 
@@ -75,9 +73,7 @@ const NewGroupModel = ({ isGroupModel, setGroupModel }) => {
       <div
         className="bg-gray-200 mb-2 rounded-lg flex items-center p-1 cursor-pointer"
         onClick={() => onAddToSelectedUsers(item)}
-        style={
-          { cursor: 'pointer' }
-        }
+        style={{ cursor: "pointer" }}
       >
         <Image
           src={picture}
@@ -128,12 +124,20 @@ const NewGroupModel = ({ isGroupModel, setGroupModel }) => {
   const handleCreateNewGroup = async (event) => {
     event.preventDefault();
 
+    if (selectedUsers.length < 2) {
+      toast.warning("At least two people are required to create a group.", {
+        position: "top-center",
+        autoClose: 3000,
+        transition: Flip,
+      });
+      return;
+    }
+
     const groupData = {
-      users: JSON.stringify(selectedUsers.map((u) => u._id),),
-      name: groupNameInput
+      users: JSON.stringify(selectedUsers.map((u) => u._id)),
+      name: groupNameInput,
     };
 
-    console.log("groupData", groupData);
     const options = {
       method: "POST",
       headers: {
@@ -142,22 +146,41 @@ const NewGroupModel = ({ isGroupModel, setGroupModel }) => {
       },
       body: JSON.stringify(groupData),
     };
-    const url = `${baseUrl}/api/chat/group`;
+    const url = `/api/chat/group`;
 
     try {
       const response = await fetch(url, options);
+      const data = await response.json();
       if (response.ok) {
-        const data = await response.json();
         dispatch(addSingleChatList(data));
-        setGroupModel(false)
-
+        setGroupModel(false);
+        toast.success("Group Created successfully", {
+          position: "top-center",
+          autoClose: 3000,
+          transition: Flip,
+        });
       } else {
-        console.log("response", response);
+        toast.warning(data.message, {
+          position: "top-center",
+          autoClose: 3000,
+          transition: Flip,
+        });
+        console.log("response", data.message);
       }
     } catch (error) {
       console.log(error);
-      console.log("error", error.message);
+      toast.error(error.message, {
+        position: "top-center",
+        autoClose: 3000,
+        transition: Flip,
+      });
     }
+
+    console.log("hello");
+    setSelectedUsers([]);
+    setUserNameInput("");
+    setGroupNameInput("");
+    setSearchedUsers([]);
   };
 
   return (
@@ -166,7 +189,7 @@ const NewGroupModel = ({ isGroupModel, setGroupModel }) => {
       // onAfterOpen={afterOpenModal}
       //   onRequestClose={closeModal}
       // style={customStyles}
-      className='custom-container'
+      className="custom-container"
       contentLabel="Example Modal"
     >
       <form

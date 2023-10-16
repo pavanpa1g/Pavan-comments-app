@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import Cookies from "js-cookie";
-import { ToastContainer, toast,Flip } from "react-toastify";
+import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import "./login.css";
@@ -12,8 +12,6 @@ import TextInput from "@/Components/TextInput/TextInput";
 import { handleSignUp } from "@/utils/ApiCallsAndLogics/apicalls";
 import { addUserData } from "@/store/features/userSlice";
 import LoginForm from "@/Components/LoginForm/LoginForm";
-
-
 
 const Login = () => {
   const [userData, setUserData] = useState({
@@ -29,10 +27,11 @@ const Login = () => {
   const navigate = useRouter();
 
   useEffect(() => {
-    const token = Cookies.get("jwt_token");
-    if (token) {
-      navigate.push("/", { replace: true });
-    }
+    // const token = Cookies.get("jwt_token");
+    // const loggedInUserData = JSON.parse(localStorage.getItem('userData'))
+    // if (token && loggedInUserData) {
+    //   navigate.push("/", { replace: true });
+    // }
   });
 
   const handleNameChange = (event) => {
@@ -95,11 +94,8 @@ const Login = () => {
     );
   };
 
-
-
   return (
     <div className="bg-gray-200 h-screen flex justify-center">
-      <ToastContainer />
       <div className="inner-container">
         <div className="bg-white h-20px p-1 rounded mb-2">
           <button

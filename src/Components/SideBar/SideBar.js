@@ -13,8 +13,6 @@ import { baseUrl } from "@/utils/baseApi";
 import Image from "next/image";
 import UsersLoading from "../LoadingFolder/UsersLoading/UsersLoading";
 
-
-
 const RenderUsers = ({ item, handleClick }) => {
   const { picture, name, email, _id } = item;
 
@@ -68,7 +66,8 @@ const SideBar = ({ isOpen, setIsOpen }) => {
       return;
     }
     setChatListLoading(true);
-    const url = `${baseUrl}/api/user?search=${searchTerm}`;
+    // const url = `${baseUrl}/api/user?search=${searchTerm}`;
+    const url = "/api/user";
 
     const token = Cookies.get("jwt_token");
 
@@ -122,17 +121,19 @@ const SideBar = ({ isOpen, setIsOpen }) => {
   }, [isOpen]);
 
   const accessChat = async (userId) => {
+    console.log(userId);
     try {
+      const userData = JSON.parse(localStorage.getItem("userData"));
       const config = {
         method: "POST",
         headers: {
           "Content-type": "application/json",
           Authorization: `Bearer ${Cookies.get("jwt_token")}`,
         },
-        body: JSON.stringify({ userId }),
+        body: JSON.stringify({ userId, currentUserId: userData._id }),
       };
 
-      const url = `${baseUrl}/api/chat`;
+      const url = `/api/chat`;
 
       const response = await fetch(url, config);
 
@@ -164,7 +165,6 @@ const SideBar = ({ isOpen, setIsOpen }) => {
   return (
     <div className={`${isOpen ? "sidebar-bg-container" : ""}`}>
       <div className={`sidebar ${isOpen ? "open" : ""} pt-4 sm:pt-2`}>
-        <ToastContainer />
         <div className="sidebar-header">
           <button className="close-btn" onClick={() => setIsOpen(false)}>
             <BiArrowBack />

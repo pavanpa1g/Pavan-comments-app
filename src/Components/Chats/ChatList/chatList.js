@@ -19,6 +19,13 @@ import { baseUrl } from "@/utils/baseApi";
 import Image from "next/image";
 import { Loader } from "@/Components/Loader";
 
+const apiStatusConstants = {
+  initial: "INITIAL",
+  success: "SUCCESS",
+  failure: "FAILURE",
+  inProgress: "IN_PROGRESS",
+};
+
 const ChatList = ({ setIsOpen }) => {
   const [loggedInUser, serLoggedInUser] = useState({});
   const dispatch = useDispatch();
@@ -26,9 +33,11 @@ const ChatList = ({ setIsOpen }) => {
   const chatsListSelector = useSelector((state) => state.chat.chatList);
   const [isGroupModel, setGroupModel] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [apiStatus, setApiStatus] = useState(apiStatusConstants.initial);
 
   const fetchChats = async () => {
     setLoading(true);
+    setApiStatus(apiStatusConstants.inProgress);
     try {
       const config = {
         method: "GET",
@@ -37,16 +46,19 @@ const ChatList = ({ setIsOpen }) => {
         },
       };
 
-      const url = `${baseUrl}/api/chat`;
+      const url = `/api/chat`;
 
       const response = await fetch(url, config);
       if (response.ok) {
         const data = await response.json();
+        console.log(data);
         dispatch(removeAllChatList());
         dispatch(addChatsList(data));
+        setApiStatus(apiStatusConstants.success);
       } else {
-        const { message } = response.json();
-        toast.error(message, {
+        setApiStatus(apiStatusConstants.failure);
+        const { data } = response.json();
+        toast.error(data.message, {
           position: "top-center",
           autoClose: 3000,
           transition: Flip,
@@ -59,6 +71,7 @@ const ChatList = ({ setIsOpen }) => {
         autoClose: 3000,
         transition: Flip,
       });
+      setApiStatus(apiStatusConstants.failure);
       console.log(error);
     }
     setLoading(false);
@@ -93,9 +106,9 @@ const ChatList = ({ setIsOpen }) => {
 
     return (
       <div
-        className={`chat-item-bg-container flex items-center mb-2 rounded cursor-pointer ${
+        className={`chat-item-bg-container flex items-center mb-2 rounded cursor-pointer hover:bg-violet-100 ${
           isEqualSelectedChat ? "bg-violet-300" : "bg-white"
-        }`}
+        } `}
         onClick={handleChatSelection}
       >
         <Image
@@ -123,6 +136,65 @@ const ChatList = ({ setIsOpen }) => {
     );
   };
 
+  const NoChatsYet = () => {
+    return (
+      <div className="flex h-full items-center justify-center ">
+        <h1 className="text-black font-semibold">No Chats Yet!</h1>
+      </div>
+    );
+  };
+
+  const renderSuccess = () => {
+    if (chatsListSelector.length === 0) {
+      return <NoChatsYet />;
+    }
+    return (
+      <div className="chat-list-scroll-container">
+        {chatsListSelector.map((item) => (
+          <ChatItem key={item._id} item={item} />
+        ))}
+      </div>
+    );
+  };
+
+  const renderFailureView = () => {
+    return (
+      <div className="flex-1 items-center justify-center w-full h-full border-2 border-red-500">
+        <p className="text-black ">Something Went wrong!</p>
+        <button
+          type="button"
+          className="bg-blue-500 px-3 py-2"
+          onClick={fetchChats}
+        >
+          Retry
+        </button>
+      </div>
+    );
+  };
+
+  const renderLoading = () => {
+    return (
+      <div className="chat-list-loader-container">
+        <Loader />
+      </div>
+    );
+  };
+
+  const renderChatList = () => {
+    switch (apiStatus) {
+      case apiStatusConstants.success:
+        return renderSuccess();
+      case apiStatusConstants.failure:
+        return renderFailureView();
+      case apiStatusConstants.inProgress:
+        return renderLoading();
+      default:
+        return null;
+    }
+  };
+
+  console.log("apiStatus", apiStatus);
+
   return (
     <div
       className={`left-list-width-container   ${smallScreenAndSelector}  p-2 rounded-lg chat-list-bg-shadow `}
@@ -131,7 +203,6 @@ const ChatList = ({ setIsOpen }) => {
         setGroupModel={setGroupModel}
         isGroupModel={isGroupModel}
       />
-      <ToastContainer />
       <div className="flex items-center  mb-2 justify-between">
         <div className="w-full input-container flex items-center self-start ">
           <input
@@ -148,17 +219,13 @@ const ChatList = ({ setIsOpen }) => {
         </button>
       </div>
 
-      {loading ? (
-        <div className="chat-list-loader-container">
-          <Loader />
-        </div>
+      {renderChatList()}
+
+      {/* {loading ? (
+
       ) : (
-        <div className="chat-list-scroll-container">
-          {chatsListSelector.map((item) => (
-            <ChatItem key={item._id} item={item} />
-          ))}
-        </div>
-      )}
+        
+      )} */}
     </div>
   );
 };

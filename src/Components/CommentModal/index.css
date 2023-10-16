@@ -85,8 +85,18 @@
   }
 
 
-  @media screen and (min-width:413px) {
+  @media screen and (min-width:768px) {
     .half-container{
         width: 50%;
+    }
+  }
+
+  .retry-text{
+    display: none;
+  }
+
+  @media screen and (min-width:768px) {
+    .retry-text{
+      display: flex;
     }
   }

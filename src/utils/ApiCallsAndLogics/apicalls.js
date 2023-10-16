@@ -1,5 +1,5 @@
 import Cookies from "js-cookie";
-import {  toast, Flip } from "react-toastify";
+import { toast, Flip } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { useDispatch } from 'react-redux';
 import { addUserData } from "@/store/features/userSlice";
@@ -25,7 +25,7 @@ export const handleSignUp = async (
     body: JSON.stringify(userData),
   };
 
-  const url = `${baseUrl}/api/user`;
+  const url = `/api/user/register`;
 
   try {
     const response = await fetch(url, options);
@@ -125,20 +125,20 @@ export const handleSignUp = async (
 // import Cookies from "js-cookie";
 
 
-    //   const dispatch = useDispatch()
-    // useEffect(
-    //     ()=>{
-    //         const userDataJSON= localStorage.getItem('userData')
-    //         const token  = Cookies.get('jwt_token')
-    //         if (!userData || !token){
-    //             const userData = JSON.parse(userDataJSON)
-    //             const newData = {
-    //                 ...userData,token:token
-    //             }
-    //             dispatch(addUserData(userData))
-    //         }else{
+//   const dispatch = useDispatch()
+// useEffect(
+//     ()=>{
+//         const userDataJSON= localStorage.getItem('userData')
+//         const token  = Cookies.get('jwt_token')
+//         if (!userData || !token){
+//             const userData = JSON.parse(userDataJSON)
+//             const newData = {
+//                 ...userData,token:token
+//             }
+//             dispatch(addUserData(userData))
+//         }else{
 
-    //         }
-    //     }
-    //     ,[]
-    // )
+//         }
+//     }
+//     ,[]
+// )

@@ -7,7 +7,7 @@ import { ImCross } from "react-icons/im";
 import { addChats, removeSelectedChat } from "@/store/features/chatSlice";
 import Cookies from "js-cookie";
 import NoMessages from "../NoMessages/NoMessages";
-import EachText from "../EachText/EachText";
+
 import {
   getToken,
   isLastMessage,
@@ -24,7 +24,9 @@ import { baseUrl } from "@/utils/baseApi";
 import Image from "next/image";
 import { Loader } from "@/Components/Loader";
 
-const ENDPOINT = baseUrl;
+// const ENDPOINT = baseUrl;
+const ENDPOINT =
+  "https://pavangramnew-fqmb3upb6-pavangattu5-gmailcom.vercel.app/";
 let socket, selectedChatCompare;
 
 // const defaultOptions = {
@@ -35,6 +37,13 @@ let socket, selectedChatCompare;
 //     preserveAspectRatio: "xMidYMid slice",
 //   },
 // };
+
+const apiStatusConstants = {
+  initial: "INITIAL",
+  success: "SUCCESS",
+  failure: "FAILURE",
+  inProgress: "IN_PROGRESS",
+};
 
 const ChatsComponent = () => {
   const selectedChatSelector = useSelector((state) => state.chat.selectedChat);
@@ -112,12 +121,13 @@ const ChatsComponent = () => {
           Authorization: `Bearer ${Cookies.get("jwt_token")}`,
         },
       };
-      const url = `${baseUrl}/api/message/${_id}`;
+      const url = `/api/message/${_id}`;
 
       try {
         const response = await fetch(url, options);
         if (response.ok) {
           const data = await response.json();
+          console.log(data);
           setMessages(data);
 
           socket.emit("join chat", selectedChat._id);
@@ -170,8 +180,9 @@ const ChatsComponent = () => {
 
     const sendNewMessage = async () => {
       socket.emit("stop typing", selectedChat._id);
-      const url = `${baseUrl}/api/message/`;
+      const url = `/api/message/`;
 
+      const userData = JSON.parse(localStorage.getItem("userData"));
       const options = {
         method: "POST",
         headers: {
@@ -181,6 +192,7 @@ const ChatsComponent = () => {
         body: JSON.stringify({
           content: newMessage,
           chatId: selectedChatSelector.data._id,
+          currentUserId: userData._id,
         }),
       };
       try {
@@ -224,9 +236,7 @@ const ChatsComponent = () => {
               {!isGroupChat && selectedUser.email.slice(1)}
             </h1>
             {!isGroupChat && isTyping && (
-              <p className="text-color ">
-                Typing...
-              </p>
+              <p className="text-color ">Typing...</p>
             )}
           </div>
           <button onClick={() => dispatch(removeSelectedChat())}>
@@ -254,31 +264,32 @@ const ChatsComponent = () => {
                     currentUser._id
                   );
 
-
                   return (
                     // <EachText key={item._id} item={item} />
                     <div key={m._id} className={`flex mb-auto`}>
                       {(isSameSender(messages, m, i, currentUser._id) ||
                         isLastMessage(messages, i, currentUser._id)) && (
-                          <Image
-                            src={m.sender.picture}
-                            width={25}
-                            height={25}
-                            alt="profile"
-                            className="message-img-logo"
-                          />
-                        )}
+                        <Image
+                          src={m.sender?.picture}
+                          width={25}
+                          height={25}
+                          alt="profile"
+                          className="message-img-logo"
+                        />
+                      )}
                       <span
-                        className={`${m.sender._id === currentUser._id
-                          ? "current-user-bg-color"
-                          : "other-user-bg-color"
-                          } each-text-container `}
+                        className={`${
+                          m.sender?._id === currentUser._id
+                            ? "current-user-bg-color"
+                            : "other-user-bg-color"
+                        } each-text-container `}
                         style={{
                           marginLeft: `${marginLeft}`,
-                          marginTop: `${isSameUser(messages, m, i, currentUser._id)
-                            ? "3px"
-                            : "10px"
-                            }`,
+                          marginTop: `${
+                            isSameUser(messages, m, i, currentUser._id)
+                              ? "3px"
+                              : "10px"
+                          }`,
                           overflowX: "hidden",
                         }}
                       >
