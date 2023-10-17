@@ -2,6 +2,7 @@
     width: 100%;
     margin-bottom: 10px;
     box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+    animation: slideIn 1.5s ease-in-out forwards;
 }
 
 
@@ -50,4 +51,14 @@ textarea {
     color: #6b7280;
     margin-left: auto;
     font-size: 8px;
+}
+
+
+@keyframes slideIn {
+    from {
+        transform: translateY(20px);
+    }
+    to{
+        transform: translateY(0);
+    }
 }

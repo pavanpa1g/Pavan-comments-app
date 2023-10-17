@@ -153,7 +153,7 @@ const SideBar = ({ isOpen, setIsOpen }) => {
         });
       }
     } catch (error) {
-      console.log(error);
+      console.log("er", error);
       toast.error(error.message, {
         position: "top-center",
         autoClose: 3000,

@@ -49,19 +49,23 @@
 
 
 .chat-list-bg-shadow{
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    /* box-shadow: 25px 0px 20px -33px rgba(0, 0, 0, 0.45); */
+    border-right:1px solid rgb(229 231 235);
 }
+
 
 
 
 .chat-item-bg-container{
-    /* box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px; */
     padding: 0.75rem 0.5rem;
 }
 
 .chat-item-bg-container:hover{
-    background-color:rgb(196 181 253 / var(--tw-bg-opacity)) ;
+    background-color:rgb(245 245 245 / var(--tw-bg-opacity)) ;
     
+}
+.selected-chat-bg-color {
+background-color: rgb(245 245 245 / var(--tw-bg-opacity));
 }
 
 

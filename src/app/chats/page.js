@@ -13,21 +13,18 @@ import ProtectedRoute from "@/Components/ProtectedRoute";
 const ChatPage = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-
   return (
-    <div className="bg-white h-screen border-1 border-red-800 pb-2 sm:pb-5 p-5 flex flex-col items-center w-screen">
+    <div className="bg-white h-screen flex flex-col items-center w-screen">
+      <Header />
       <SideBar isOpen={isOpen} setIsOpen={setIsOpen} />
-
-      <div className="w-full sm:w-[80%] h-[100%]">
-        <Header />
-        <div className="flex  justify-between  h-[94%]">
-         <ChatList setIsOpen={setIsOpen} />
-          <ChatsComponent />
-        </div>
+      <div className="w-full h-[100%] px-3 flex">
+        {/* <div className="flex  justify-between "> */}
+        <ChatList setIsOpen={setIsOpen} />
+        <ChatsComponent />
+        {/* </div> */}
       </div>
     </div>
   );
 };
 
-
-export default  ChatPage 
+export default ChatPage;

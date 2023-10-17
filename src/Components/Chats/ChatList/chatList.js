@@ -107,7 +107,7 @@ const ChatList = ({ setIsOpen }) => {
     return (
       <div
         className={`chat-item-bg-container flex items-center mb-2 rounded cursor-pointer hover:bg-violet-100 ${
-          isEqualSelectedChat ? "bg-violet-300" : "bg-white"
+          isEqualSelectedChat ? "selected-chat-bg-color" : "bg-white"
         } `}
         onClick={handleChatSelection}
       >
@@ -197,7 +197,7 @@ const ChatList = ({ setIsOpen }) => {
 
   return (
     <div
-      className={`left-list-width-container   ${smallScreenAndSelector}  p-2 rounded-lg chat-list-bg-shadow `}
+      className={`left-list-width-container   ${smallScreenAndSelector}  p-2  chat-list-bg-shadow `}
     >
       <NewGroupModel
         setGroupModel={setGroupModel}

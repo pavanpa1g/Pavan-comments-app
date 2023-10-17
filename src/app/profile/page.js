@@ -140,9 +140,9 @@ const ProfileModal = () => {
   };
 
   return (
-    <div className="bg-white min-h-screen p-5 flex flex-col items-center  profile-bg-container">
+    <div className="bg-white min-h-screen  flex flex-col items-center  profile-bg-container">
+      <Header />
       <div className="w-full sm:w-[80%] profile-inner-container">
-        <Header />
         <div className="p-2 mt-4">
           <h1 className="head-text font-extrabold text-xl mb-2">Profile</h1>
           <div className="flex items-center">
@@ -150,7 +150,7 @@ const ProfileModal = () => {
               <Image
                 src={picture}
                 alt={"profile"}
-                className="rounded-full w-[150px] h-[150px]"
+                className="rounded-full w-[150px] h-[150px] profile-image"
                 width={150}
                 height={150}
               />

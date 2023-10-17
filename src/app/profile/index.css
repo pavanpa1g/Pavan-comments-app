@@ -26,3 +26,19 @@
 }
 
 
+.profile-image{
+    animation: zoomIn 1.5s 1s ease-in-out ;
+}
+
+.profile-image:hover{
+    transform: scale(0.9);
+}
+
+
+@keyframes zoomIn {
+    from{
+        transform: scale(0.5);
+    }to{
+        transform: scale(1);
+    }
+}

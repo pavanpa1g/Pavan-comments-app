@@ -246,9 +246,9 @@ export default function Home() {
   };
 
   return (
-    <div className="bg-white min-h-screen p-5 flex flex-col items-center w-screen">
-      <div className="w-full sm:w-[80%] ">
-        <Header />
+    <div className="bg-white min-h-screen flex flex-col items-center w-screen">
+      <Header />
+      <div className="w-full sm:w-[80%] px-6">
         <form
           onSubmit={uploadImage}
           className="flex justify-between items-start sm:mt-3 flex-wrap"

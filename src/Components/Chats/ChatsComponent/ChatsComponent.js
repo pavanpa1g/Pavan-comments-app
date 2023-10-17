@@ -23,6 +23,7 @@ import io from "socket.io-client";
 import { baseUrl } from "@/utils/baseApi";
 import Image from "next/image";
 import { Loader } from "@/Components/Loader";
+import FailureView from "@/Components/FailureView";
 
 // const ENDPOINT = baseUrl;
 const ENDPOINT =
@@ -67,6 +68,8 @@ const ChatsComponent = () => {
     const [socketConnected, setSocketConnected] = useState(false);
     const [typing, setTyping] = useState(false);
     const [isTyping, setIsTyping] = useState(false);
+
+    const [apiStatus, setApiStatus] = useState(apiStatusConstants.initial);
 
     const chatContainerRef = useRef(null);
 
@@ -115,6 +118,7 @@ const ChatsComponent = () => {
 
     const fetchSeparateChats = async () => {
       setLoading(true);
+      setApiStatus(apiStatusConstants.inProgress);
       const options = {
         method: "GET",
         headers: {
@@ -129,13 +133,15 @@ const ChatsComponent = () => {
           const data = await response.json();
           console.log(data);
           setMessages(data);
-
           socket.emit("join chat", selectedChat._id);
+          setApiStatus(apiStatusConstants.success);
         } else {
           console.log(response);
+          setApiStatus(apiStatusConstants.failure);
         }
       } catch (error) {
         console.log(error);
+        setApiStatus(apiStatusConstants.failure);
       }
       setLoading(false);
     };
@@ -218,9 +224,104 @@ const ChatsComponent = () => {
       }
     };
 
+    const renderSuccess = () => {
+      return (
+        <>
+          {messages.length > 0 ? (
+            <div
+              className="chats-container-style overflow-y-scroll"
+              ref={chatContainerRef}
+            >
+              {messages.map((m, i) => {
+                const currentUser = JSON.parse(
+                  localStorage.getItem("userData")
+                );
+                const marginLeft = isSameSenderMargin(
+                  messages,
+                  m,
+                  i,
+                  currentUser._id
+                );
+
+                return (
+                  <div key={m._id} className={`flex mb-auto`}>
+                    {(isSameSender(messages, m, i, currentUser._id) ||
+                      isLastMessage(messages, i, currentUser._id)) && (
+                      <Image
+                        src={m.sender?.picture}
+                        width={25}
+                        height={25}
+                        alt="profile"
+                        className="message-img-logo"
+                      />
+                    )}
+                    <span
+                      className={`${
+                        m.sender?._id === currentUser._id
+                          ? "current-user-bg-color"
+                          : "other-user-bg-color"
+                      } each-text-container `}
+                      style={{
+                        marginLeft: `${marginLeft}`,
+                        marginTop: `${
+                          isSameUser(messages, m, i, currentUser._id)
+                            ? "3px"
+                            : "10px"
+                        }`,
+                        overflowX: "hidden",
+                      }}
+                    >
+                      <p>{m.content}</p>
+                      <p className="text-gray-500 text-[8px] text-right">
+                        {getFormattedDate(m.createdAt)}
+                      </p>
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            <NoMessages />
+          )}
+        </>
+      );
+    };
+
+    const renderInProgress = () => {
+      return (
+        <div className="loader-container">
+          <Loader />
+        </div>
+      );
+    };
+
+    const renderFailure = () => {
+      const handleRetry = () => {
+        fetchSeparateChats();
+      };
+      return (
+        <div className="flex-1 flex justify-center">
+          <FailureView handleRetry={handleRetry} />
+        </div>
+      );
+    };
+
+    const renderSeparateChats = () => {
+      switch (apiStatus) {
+        case apiStatusConstants.success:
+          return renderSuccess();
+        case apiStatusConstants.inProgress:
+          return renderInProgress();
+        case apiStatusConstants.failure:
+          return renderFailure();
+        default:
+          return null;
+      }
+    };
+
     return (
       <div className="separate-chat-container">
-        <div className="flex py-1 items-center top-profile-container">
+        <div className="flex  items-center top-profile-container">
           <Image
             src={isGroupChat ? groupPicture : selectedUser.picture}
             alt="profile"
@@ -244,88 +345,35 @@ const ChatsComponent = () => {
           </button>
         </div>
 
-        {loading ? (
-          <div className="loader-container">
-            <Loader />
+        {renderSeparateChats()}
+
+        <div className="bottom-input-container">
+          <div className="fixed-chat-container">
+            <input
+              type="text"
+              value={newMessage}
+              placeholder="Message"
+              className="text-gray-700"
+              onChange={handleInputChange}
+              onKeyDown={handelOnPressEnter}
+            />
           </div>
-        ) : (
-          <>
-            {" "}
-            {messages.length > 0 ? (
-              <div className="chats-container-style" ref={chatContainerRef}>
-                {messages.map((m, i) => {
-                  const currentUser = JSON.parse(
-                    localStorage.getItem("userData")
-                  );
-                  const marginLeft = isSameSenderMargin(
-                    messages,
-                    m,
-                    i,
-                    currentUser._id
-                  );
-
-                  return (
-                    // <EachText key={item._id} item={item} />
-                    <div key={m._id} className={`flex mb-auto`}>
-                      {(isSameSender(messages, m, i, currentUser._id) ||
-                        isLastMessage(messages, i, currentUser._id)) && (
-                        <Image
-                          src={m.sender?.picture}
-                          width={25}
-                          height={25}
-                          alt="profile"
-                          className="message-img-logo"
-                        />
-                      )}
-                      <span
-                        className={`${
-                          m.sender?._id === currentUser._id
-                            ? "current-user-bg-color"
-                            : "other-user-bg-color"
-                        } each-text-container `}
-                        style={{
-                          marginLeft: `${marginLeft}`,
-                          marginTop: `${
-                            isSameUser(messages, m, i, currentUser._id)
-                              ? "3px"
-                              : "10px"
-                          }`,
-                          overflowX: "hidden",
-                        }}
-                      >
-                        <p>{m.content}</p>
-                        <p className="text-gray-500 text-[8px] text-right">
-                          {getFormattedDate(m.createdAt)}
-                        </p>
-                      </span>
-                    </div>
-                  );
-                })}
-                {/* {isTyping ? (
-                  <div>
-
-                  </div>
-                ) : (
-                  <></>
-                )} */}
-              </div>
-            ) : (
-              <NoMessages />
-            )}
-          </>
-        )}
-
-        <div className="fixed-chat-container ">
-          <input
-            type="text"
-            value={newMessage}
-            placeholder="Message"
-            className="text-gray-700"
-            onChange={handleInputChange}
-            onKeyDown={handelOnPressEnter}
-          />
           <button className="send-button" onClick={sendNewMessage}>
-            <MdSend />
+            {/* <MdSend /> */}
+
+            <svg
+              stroke="currentColor"
+              fill="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+              class="text-white"
+              height="18"
+              width="18"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d="M3.478 2.405a.75.75 0 00-.926.94l2.432 7.905H13.5a.75.75 0 010 1.5H4.984l-2.432 7.905a.75.75 0 00.926.94 60.519 60.519 0 0018.445-8.986.75.75 0 000-1.218A60.517 60.517 0 003.478 2.405z"></path>
+            </svg>
           </button>
         </div>
       </div>
@@ -333,9 +381,7 @@ const ChatsComponent = () => {
   };
 
   return (
-    <div
-      className={`right-list-width-container  ${smallScreenAndSelector} left-container-chat-list h-full`}
-    >
+    <div className={`right-list-width-container  ${smallScreenAndSelector}`}>
       {selectedChatSelector.data ? (
         <SelectedChatContainer />
       ) : (

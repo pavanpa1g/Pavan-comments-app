@@ -1,72 +1,120 @@
-svg path{
-
-    /* Initial color */
-    transition: fill 0.2s ease;
-    /* Smooth color transition */
+svg path {
+  /* Initial color */
+  transition: fill 0.2s ease;
+  /* Smooth color transition */
 }
 
-.hov>svg:hover path{
-    fill:#3B82F6;
+.hov > svg:hover path {
+  fill: #3b82f6;
 }
 
-.logout-icon{
+.logout-icon {
+  display: flex;
+  margin-left: 14px;
+}
+
+@media screen and (min-width: 450px) {
+  .logout-icon {
+    display: none;
+  }
+}
+
+.logout-button {
+  display: none;
+  animation: slideRight 1.5s  ease-in-out ;
+}
+
+@media screen and (min-width: 450px) {
+  .logout-button {
     display: flex;
     margin-left: 14px;
+  }
 }
 
-@media screen and (min-width:450px) {
-    .logout-icon{
-        display: none;
-    }
+.header-bg {
+  background-color: rgb(241 245 249);
+  display: flex;
+  align-items: center;
+  padding: 0 1.75rem;
+  height: 9vh;
+  /* margin-bottom: 8px; */
+  width: 100%;
+  box-shadow:rgba(31, 45, 61, 0.15) 0px 2px 2px 0px;
 }
-
-
-.logout-button{
-    display: none;
-
-}
-
-
-@media screen and (min-width:450px) {
-    .logout-button{
-        display: flex;
-        margin-left: 14px;
-    }
-}
-
-
-.header-bg{
-    background-color: rgb(241 245 249);
-    display: flex;
-    align-items: center;
-    padding: 8px 24px;
-    margin-bottom: 8px;
-}
-
-
-
 
 .color-logout-button {
-    border: 2px solid #3B82F6;
-    /* Replace #3498db with your desired blue color code */
-    color: #3B82F6;
-    font-weight: 600;
-    /* Equivalent to Tailwind's font-semibold */
-    padding: 0px 8px;
-    /* Adjust padding values as needed */
-    border-radius: 0.25rem;
-    /* Equivalent to Tailwind's rounded-md */
-    margin-left: 0.5rem;
-    /* Adjust margin as needed */
-    transition: color 0.3s, background-color 0.3s;
-    /* Equivalent to Tailwind's hover transitions */
+  border: 2px solid #3b82f6;
+  /* Replace #3498db with your desired blue color code */
+  color: #3b82f6;
+  font-weight: 600;
+  /* Equivalent to Tailwind's font-semibold */
+  padding: 0px 8px;
+  /* Adjust padding values as needed */
+  border-radius: 0.25rem;
+  /* Equivalent to Tailwind's rounded-md */
+  /* margin-left: 0.5rem; */
+  /* Adjust margin as needed */
+  transition: color 0.3s, background-color 0.3s;
+  /* Equivalent to Tailwind's hover transitions */
 }
 
 .color-logout-button:hover {
-    color: #fff;
-    /* Change text color on hover to white or your desired color */
-    background-color: #3B82F6;
-    /* Change background color on hover to your desired color */
-    cursor: pointer;
-    /* Add pointer cursor on hover */
+  color: #fff;
+  /* Change text color on hover to white or your desired color */
+  background-color: #3b82f6;
+  /* Change background color on hover to your desired color */
+  cursor: pointer;
+  /* Add pointer cursor on hover */
+}
+
+.image-text {
+  animation: slideLeft 1.5s ease-in-out forwards;
+}
+
+.person {
+  animation: slideRight 1.5s ease-in-out ;
+}
+
+.message{
+    animation: slideRight 1.5s  ease-in-out ;
+}
+
+@keyframes slideLeft {
+  from {
+    transform: translateX(-30px);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-30px);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+
+@keyframes slideUp {
+    from {
+        transform: translateY(30px);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+
+@keyframes slideRight {
+    from{
+        transform: translateX(30px);
+    }
+    to{
+        transform: translateX(0);
+    }
 }

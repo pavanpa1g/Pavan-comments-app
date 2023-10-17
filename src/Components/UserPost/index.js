@@ -21,11 +21,16 @@ const UserPost = ({ item, fromProfile }) => {
           {name.slice(0, 1).toUpperCase()}
           {name.slice(1)}
         </h2>
-        <p className="para">
-          {getFormattedDate(createdAt)}
-        </p>
+        <p className="para">{getFormattedDate(createdAt)}</p>
       </div>
-      <Image width={300} height={180} src={imageUrl} alt="logo" className="image hover:object-contain" loading="lazy" />
+      <Image
+        width={300}
+        height={180}
+        src={imageUrl}
+        alt="logo"
+        className="image hover:object-contain"
+        loading="lazy"
+      />
       <Comments
         image={imageUrl}
         // imageId={_id}
